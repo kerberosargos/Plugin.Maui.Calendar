@@ -21,6 +21,11 @@ public static class DefaultStyles
 	public static Style DefaultSelectedDateLabelStyle { get; }
 	public static Style DefaultDaysTitleLabelStyle { get; }
 	public static Style DefaultWeekendTitleStyle { get; }
+	public static Style DefaultEventIndicatorStyle { get; }
+	public static Style DefaultEventIndicatorTextStyle { get; }
+	public static Style DefaultEventIndicatorImageStyle { get; }
+
+	public static Style DefaultSeparatorStyle => CreateDefaultSeparatorStyle();
 
 	#endregion
 
@@ -40,6 +45,9 @@ public static class DefaultStyles
 		DefaultSelectedDateLabelStyle = CreateDefaultSelectedDateLabelStyle();
 		DefaultDaysTitleLabelStyle = CreateDefaultDaysTitleLabelStyle();
 		DefaultWeekendTitleStyle = CreateDefaultWeekendTitleStyle();
+		DefaultEventIndicatorStyle = CreateDefaultEventIndicatorStyle();
+		DefaultEventIndicatorTextStyle = CreateDefaultEventIndicatorTextStyle();
+		DefaultEventIndicatorImageStyle = CreateDefaultEventIndicatorImageStyle();
 	}
 
 	static Style CreateBaseHeaderLabelStyle()
@@ -83,7 +91,6 @@ public static class DefaultStyles
 		style.Setters.Add(new Setter() { Property = Label.LineBreakModeProperty, Value = LineBreakMode.WordWrap });
 		style.Setters.Add(new Setter() { Property = Label.VerticalTextAlignmentProperty, Value = TextAlignment.Center });
 		style.Setters.Add(new Setter() { Property = View.MarginProperty, Value = new Thickness(5, 2, 5, 2) });
-
 
 		return style;
 	}
@@ -175,6 +182,45 @@ public static class DefaultStyles
 	static Style CreateDefaultWeekendTitleStyle()
 	{
 		Style style = new(typeof(Label)) { CanCascade = true, BasedOn = DefaultDaysTitleLabelStyle };
+		return style;
+	}
+
+	static Style CreateDefaultEventIndicatorStyle()
+	{
+		Style style = new(typeof(Border)) { CanCascade = true };
+		style.Setters.Add(new Setter() { Property = VisualElement.HeightRequestProperty, Value = 10.0 });
+		style.Setters.Add(new Setter() { Property = VisualElement.WidthRequestProperty, Value = 10.0 });
+		style.Setters.Add(new Setter() { Property = Border.StrokeShapeProperty, Value = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 5 } });
+		style.Setters.Add(new Setter() { Property = View.MarginProperty, Value = new Thickness(0) });
+		return style;
+	}
+
+	static Style CreateDefaultEventIndicatorTextStyle()
+	{
+		Style style = new(typeof(Label)) { CanCascade = true };
+		style.Setters.Add(new Setter() { Property = Label.FontSizeProperty, Value = 12.0 });
+		style.Setters.Add(new Setter() { Property = Label.TextColorProperty, Value = Colors.Black });
+		style.Setters.Add(new Setter() { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center });
+		style.Setters.Add(new Setter() { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center });
+		return style;
+	}
+
+	static Style CreateDefaultEventIndicatorImageStyle()
+	{
+		Style style = new(typeof(Image)) { CanCascade = true };
+		style.Setters.Add(new Setter() { Property = Image.AspectProperty, Value = Aspect.AspectFit });
+		style.Setters.Add(new Setter() { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center });
+		style.Setters.Add(new Setter() { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center });
+		return style;
+	}
+
+	static Style CreateDefaultSeparatorStyle()
+	{
+		Style style = new(typeof(BoxView));
+		style.Setters.Add(new Setter { Property = BoxView.ColorProperty, Value = Colors.LightGray });
+		style.Setters.Add(new Setter { Property = VisualElement.HeightRequestProperty, Value = 1.0 });
+		style.Setters.Add(new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.End });
+		style.Setters.Add(new Setter { Property = View.MarginProperty, Value = new Thickness(0, 0, 0, -1) });
 		return style;
 	}
 }

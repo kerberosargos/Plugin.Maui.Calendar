@@ -1,4 +1,6 @@
-﻿namespace Plugin.Maui.Calendar.Interfaces;
+﻿using Plugin.Maui.Calendar.Models;
+
+namespace Plugin.Maui.Calendar.Interfaces;
 
 /// <summary>
 /// Interface for customize DayEvent colors
@@ -29,5 +31,8 @@ public interface IPersonalizableDayEvent
     /// if the EventIndicatorSelectedTextColor is null then the general EventIndicatorSelectedTextColor of the Calendar will be used
     /// </summary>
     Color EventIndicatorSelectedTextColor { get; set; }
-    #endregion
+
+	EventIndicator EventIndicator { get; set; }
+
+	#endregion
 }

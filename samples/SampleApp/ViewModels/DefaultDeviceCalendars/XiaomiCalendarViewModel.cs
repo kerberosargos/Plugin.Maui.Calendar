@@ -9,7 +9,7 @@ public partial class XiaomiCalendarViewModel : BasePageViewModel, IQueryAttribut
     {
         Events = new EventCollection
         {
-            [DateTime.Now.AddDays(1)] = new DayEventCollection<AdvancedEventModel>(Colors.Purple, Colors.Green)
+            [DateTime.Now.AddDays(1)] = new DayEventCollection<AdvancedEventModel>(Colors.Purple, Colors.Green, null)
             {
                 new() { Name = "Cool event1", Description = "This is Cool event1's description!", Starting= new DateTime() },
                 new() { Name = "Cool event2", Description = "This is Cool event2's description!", Starting= new DateTime() }

@@ -136,7 +136,6 @@ public partial class Calendar : ContentView, IDisposable
 
 	void RenderLayout()
 	{
-
 		CurrentViewLayoutEngine = CalendarLayout switch
 		{
 			WeekLayout.Week => new WeekViewEngine(1, FirstDayOfWeek),
@@ -148,7 +147,6 @@ public partial class Calendar : ContentView, IDisposable
 		daysControl.RowDefinitions.Clear();
 		daysControl.ColumnDefinitions.Clear();
 
-		// Generate the new layout and populate the existing daysControl Grid
 		var generatedLayout = CurrentViewLayoutEngine.GenerateLayout(
 			dayViews,
 			this,
@@ -156,20 +154,27 @@ public partial class Calendar : ContentView, IDisposable
 			DayTappedCommand
 		);
 
-		// Copy the generated layout structure to the existing daysControl Grid
-		foreach (var child in generatedLayout.Children)
-		{
-			daysControl.Children.Add(child);
-		}
-
-		foreach (var rowDef in generatedLayout.RowDefinitions)
-		{
-			daysControl.RowDefinitions.Add(rowDef);
-		}
-
 		foreach (var colDef in generatedLayout.ColumnDefinitions)
 		{
 			daysControl.ColumnDefinitions.Add(colDef);
+		}
+
+		for (int i = 0; i < generatedLayout.RowDefinitions.Count; i++)
+		{
+			if (i > 0) // Day Titles
+			{
+				var separator = new BoxView { Style = SeparatorStyle };
+				Grid.SetRow(separator, i);
+				Grid.SetColumnSpan(separator, 7);
+				daysControl.Children.Add(separator);
+			}
+
+			daysControl.RowDefinitions.Add(generatedLayout.RowDefinitions[i]);
+		}
+
+		foreach (var child in generatedLayout.Children)
+		{
+			daysControl.Children.Add(child);
 		}
 
 		UpdateDaysColors();
@@ -179,10 +184,12 @@ public partial class Calendar : ContentView, IDisposable
 
 	internal void AssignIndicatorColors(ref DayModel dayModel)
 	{
-		dayModel.EventIndicatorColor = EventIndicatorColor;
-		dayModel.EventIndicatorSelectedColor = EventIndicatorSelectedColor;
-		dayModel.EventIndicatorTextColor = EventIndicatorTextColor;
-		dayModel.EventIndicatorSelectedTextColor = EventIndicatorSelectedTextColor;
+		dayModel.DayViewSize = DayViewSize;
+		dayModel.DayIndicatorViewSize = DayIndicatorViewSize;
+		dayModel.DayViewCornerRadius = DayViewCornerRadius;
+		dayModel.EventIndicatorStyle = EventIndicatorStyle;
+		dayModel.EventIndicatorTextStyle = EventIndicatorTextStyle;
+		dayModel.EventIndicatorImageStyle = EventIndicatorImageStyle;
 
 		if (Events.TryGetValue(dayModel.Date, out var dayEventCollection))
 		{
@@ -203,16 +210,30 @@ public partial class Calendar : ContentView, IDisposable
 			}
 			if (dayEventCollection is IMultiEventDay multiEventDay)
 			{
-				dayModel.EventColors = multiEventDay.Colors?.Take(5).ToList() ?? [];
+				dayModel.EventIndicators = multiEventDay.EventIndicators
+				.Take(5)
+				.Select(e => new EventIndicator
+				{
+					DotColor = e.DotColor,
+					Text = e.Text,
+					ImageSource = e.ImageSource,
+				})
+				.ToList();
 			}
 			else
 			{
-				dayModel.EventColors = [dayModel.IsSelected ? dayModel.EventIndicatorSelectedColor : dayModel.EventIndicatorColor];
+				dayModel.EventIndicators =
+				[
+					new EventIndicator()
+					{
+						DotColor = dayModel.IsSelected ? dayModel.EventIndicatorSelectedColor : dayModel.EventIndicatorColor,
+					}
+				];
 			}
 		}
 		else
 		{
-			dayModel.EventColors = [];
+			dayModel.EventIndicators = [];
 		}
 	}
 

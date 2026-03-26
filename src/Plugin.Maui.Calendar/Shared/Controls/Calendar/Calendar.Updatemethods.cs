@@ -164,9 +164,13 @@ public partial class Calendar : ContentView, IDisposable
 				dayModel.DayTappedCommand = DayTappedCommand;
 				dayModel.EventIndicatorType = EventIndicatorType;
 				dayModel.DayViewSize = DayViewSize;
+				dayModel.DayIndicatorViewSize = DayIndicatorViewSize;
 				dayModel.DayViewBorderMargin = DayViewBorderMargin;
 				dayModel.DayViewCornerRadius = DayViewCornerRadius;
 				dayModel.DaysLabelStyle = DaysLabelStyle;
+				dayModel.EventIndicatorStyle = EventIndicatorStyle;
+				dayModel.EventIndicatorTextStyle = EventIndicatorTextStyle;
+				dayModel.EventIndicatorImageStyle = EventIndicatorImageStyle;
 				dayModel.IsThisMonth = CalendarLayout != WeekLayout.Month || currentDate.Month == ShownDate.Month;
 				dayModel.OtherMonthIsVisible = CalendarLayout != WeekLayout.Month || OtherMonthDayIsVisible;
 				dayModel.OtherMonthWeekIsVisible = CalendarLayout != WeekLayout.Month || OtherMonthWeekIsVisible || (OtherMonthDayIsVisible && currentMonthOnLine);
@@ -186,9 +190,13 @@ public partial class Calendar : ContentView, IDisposable
 				dayModel.DayTappedCommand = DayTappedCommand;
 				dayModel.EventIndicatorType = EventIndicatorType;
 				dayModel.DayViewSize = DayViewSize;
+				dayModel.DayIndicatorViewSize = DayIndicatorViewSize;
 				dayModel.DayViewBorderMargin = DayViewBorderMargin;
 				dayModel.DayViewCornerRadius = DayViewCornerRadius;
 				dayModel.DaysLabelStyle = DaysLabelStyle;
+				dayModel.EventIndicatorStyle = EventIndicatorStyle;
+				dayModel.EventIndicatorTextStyle = EventIndicatorTextStyle;
+				dayModel.EventIndicatorImageStyle = EventIndicatorImageStyle;
 				dayModel.IsThisMonth = false;
 				dayModel.OtherMonthIsVisible = false;
 				dayModel.OtherMonthWeekIsVisible = false;

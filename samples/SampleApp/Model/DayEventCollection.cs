@@ -1,4 +1,5 @@
 ﻿using Plugin.Maui.Calendar.Interfaces;
+using Plugin.Maui.Calendar.Models;
 
 namespace SampleApp.Model;
 
@@ -18,10 +19,11 @@ public class DayEventCollection<T> : List<T>, IPersonalizableDayEvent, IMultiEve
     /// </summary>
     /// <param name="eventIndicatorColor"></param>
     /// <param name="eventIndicatorSelectedColor"></param>
-    public DayEventCollection(Color eventIndicatorColor, Color eventIndicatorSelectedColor) : base()
+    public DayEventCollection(Color eventIndicatorColor, Color eventIndicatorSelectedColor, EventIndicator eventIndicator = null) : base()
     {
         EventIndicatorColor = eventIndicatorColor;
         EventIndicatorSelectedColor = eventIndicatorSelectedColor;
+		EventIndicator = eventIndicator ?? new EventIndicator();
     }
 
     /// <summary>
@@ -44,10 +46,12 @@ public class DayEventCollection<T> : List<T>, IPersonalizableDayEvent, IMultiEve
     public Color EventIndicatorSelectedColor { get; set; }
     public Color EventIndicatorTextColor { get; set; }
     public Color EventIndicatorSelectedTextColor { get; set; }
+	public EventIndicator EventIndicator { get; set; }
 
-    #endregion
 
-    #region IMultiEventDay
-    public IReadOnlyList<Color> Colors { get; set; }
-    #endregion
+	#endregion
+
+	#region IMultiEventDay
+	public IReadOnlyList<EventIndicator> EventIndicators { get; set; }
+	#endregion
 }

@@ -24,21 +24,29 @@ sealed partial class DayModel : ObservableObject
 	double dayViewSize;
 
 	[ObservableProperty]
+	double dayIndicatorViewSize;
+
+	[ObservableProperty]
 	float dayViewCornerRadius;
 
 	[ObservableProperty]
 	Style daysLabelStyle = DefaultStyles.DefaultLabelStyle;
+	
+	[ObservableProperty]
+	Style eventIndicatorStyle = DefaultStyles.DefaultEventIndicatorStyle;
+
+	[ObservableProperty]
+	Style eventIndicatorTextStyle = DefaultStyles.DefaultEventIndicatorTextStyle;
+	
+	[ObservableProperty]
+	Style eventIndicatorImageStyle = DefaultStyles.DefaultEventIndicatorImageStyle;
 
 	[ObservableProperty]
 	ICommand dayTappedCommand;
 
 	[ObservableProperty]
-	[NotifyPropertyChangedFor(
-		nameof(TextColor),
-		nameof(BackgroundColor),
-		nameof(BackgroundEventIndicator),
-		nameof(BackgroundFullEventColor)
-	)]
+	[NotifyPropertyChangedFor(nameof(BackgroundColor), nameof(OutlineColor), nameof(BackgroundFullEventColor))]
+	[NotifyPropertyChangedFor(nameof(DayRowIndex), nameof(EventIndicatorRowIndex))] // <-- Eklendi
 	bool hasEvents;
 
 	[ObservableProperty]
@@ -103,10 +111,8 @@ sealed partial class DayModel : ObservableObject
 	Color deselectedBackgroundColor = Colors.Transparent;
 
 	[ObservableProperty]
-	[NotifyPropertyChangedFor(
-		nameof(BackgroundEventIndicator),
-		nameof(BackgroundColor)
-	)]
+	[NotifyPropertyChangedFor(nameof(BackgroundEventIndicator), nameof(BackgroundColor))]
+	[NotifyPropertyChangedFor(nameof(DayRowIndex), nameof(EventIndicatorRowIndex))] // <-- Eklendi
 	EventIndicatorType eventIndicatorType = EventIndicatorType.BottomDot;
 
 	[ObservableProperty]
@@ -117,7 +123,7 @@ sealed partial class DayModel : ObservableObject
 	Color eventIndicatorColor = Color.FromArgb("#FF4081");
 
 	[ObservableProperty]
-	List<Color> eventColors;
+	List<EventIndicator> eventIndicators;
 
 	[ObservableProperty]
 	[NotifyPropertyChangedFor(
@@ -147,7 +153,9 @@ sealed partial class DayModel : ObservableObject
 	[ObservableProperty]
 	Color disabledColor = Color.FromArgb("#ECECEC");
 
-	public FlexDirection EventLayoutDirection => (HasEvents && EventIndicatorType == EventIndicatorType.TopDot) ? FlexDirection.ColumnReverse : FlexDirection.Column;
+	public int DayRowIndex => (HasEvents && EventIndicatorType == EventIndicatorType.TopDot) ? 1 : 0;
+
+	public int EventIndicatorRowIndex => (EventIndicatorType == EventIndicatorType.TopDot) ? 0 : 2;
 
 	public bool BackgroundEventIndicator => HasEvents && EventIndicatorType == EventIndicatorType.Background;
 

@@ -601,4 +601,18 @@ public partial class Calendar : ContentView, IDisposable
 		get => (bool)GetValue(AllowDeselectingProperty);
 		set => SetValue(AllowDeselectingProperty, value);
 	}
+
+	public static readonly BindableProperty SeparatorStyleProperty = BindableProperty.Create
+	(
+		nameof(SeparatorStyle),
+		typeof(Style),
+		typeof(Calendar),
+		DefaultStyles.DefaultSeparatorStyle
+	);
+
+	public Style SeparatorStyle
+	{
+		get => (Style)GetValue(SeparatorStyleProperty);
+		set => SetValue(SeparatorStyleProperty, value);
+	}
 }
