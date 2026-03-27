@@ -21,7 +21,8 @@ public static class DefaultStyles
 	public static Style DefaultSelectedDateLabelStyle { get; }
 	public static Style DefaultDaysTitleLabelStyle { get; }
 	public static Style DefaultWeekendTitleStyle { get; }
-	public static Style DefaultEventIndicatorStyle { get; }
+	public static Style DefaultEventIndicatorDotStyle { get; }
+	public static Style DefaultEventIndicatorTextContainerStyle { get; }
 	public static Style DefaultEventIndicatorTextStyle { get; }
 	public static Style DefaultEventIndicatorImageStyle { get; }
 
@@ -45,7 +46,8 @@ public static class DefaultStyles
 		DefaultSelectedDateLabelStyle = CreateDefaultSelectedDateLabelStyle();
 		DefaultDaysTitleLabelStyle = CreateDefaultDaysTitleLabelStyle();
 		DefaultWeekendTitleStyle = CreateDefaultWeekendTitleStyle();
-		DefaultEventIndicatorStyle = CreateDefaultEventIndicatorStyle();
+		DefaultEventIndicatorDotStyle = CreateDefaultEventIndicatorDotStyle();
+		DefaultEventIndicatorTextContainerStyle = CreateDefaultEventIndicatorTextContainerStyle();
 		DefaultEventIndicatorTextStyle = CreateDefaultEventIndicatorTextStyle();
 		DefaultEventIndicatorImageStyle = CreateDefaultEventIndicatorImageStyle();
 	}
@@ -182,16 +184,31 @@ public static class DefaultStyles
 	static Style CreateDefaultWeekendTitleStyle()
 	{
 		Style style = new(typeof(Label)) { CanCascade = true, BasedOn = DefaultDaysTitleLabelStyle };
+		
 		return style;
 	}
 
-	static Style CreateDefaultEventIndicatorStyle()
+	static Style CreateDefaultEventIndicatorDotStyle()
 	{
 		Style style = new(typeof(Border)) { CanCascade = true };
 		style.Setters.Add(new Setter() { Property = VisualElement.HeightRequestProperty, Value = 10.0 });
 		style.Setters.Add(new Setter() { Property = VisualElement.WidthRequestProperty, Value = 10.0 });
 		style.Setters.Add(new Setter() { Property = Border.StrokeShapeProperty, Value = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 5 } });
 		style.Setters.Add(new Setter() { Property = View.MarginProperty, Value = new Thickness(0) });
+		style.Setters.Add(new Setter() { Property = Border.PaddingProperty, Value = new Thickness(0) });
+		
+		return style;
+	}
+
+	static Style CreateDefaultEventIndicatorTextContainerStyle()
+	{
+		Style style = new(typeof(Border)) { CanCascade = true };
+		style.Setters.Add(new Setter() { Property = VisualElement.HeightRequestProperty, Value = 18.0 });
+		style.Setters.Add(new Setter() { Property = VisualElement.WidthRequestProperty, Value = 18.0 });
+		style.Setters.Add(new Setter() { Property = Border.StrokeShapeProperty, Value = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 9 } });
+		style.Setters.Add(new Setter() { Property = View.MarginProperty, Value = new Thickness(0) });
+		style.Setters.Add(new Setter() { Property = Border.PaddingProperty, Value = new Thickness(0) });
+		
 		return style;
 	}
 
@@ -202,6 +219,8 @@ public static class DefaultStyles
 		style.Setters.Add(new Setter() { Property = Label.TextColorProperty, Value = Colors.Black });
 		style.Setters.Add(new Setter() { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center });
 		style.Setters.Add(new Setter() { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center });
+		style.Setters.Add(new Setter() { Property = Label.LineBreakModeProperty, Value = LineBreakMode.TailTruncation });
+	
 		return style;
 	}
 
@@ -211,9 +230,10 @@ public static class DefaultStyles
 		style.Setters.Add(new Setter() { Property = Image.AspectProperty, Value = Aspect.AspectFit });
 		style.Setters.Add(new Setter() { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center });
 		style.Setters.Add(new Setter() { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center });
+		style.Setters.Add(new Setter() { Property = VisualElement.HeightRequestProperty, Value = 16.0 });
+
 		return style;
 	}
-
 	static Style CreateDefaultSeparatorStyle()
 	{
 		Style style = new(typeof(BoxView));
@@ -221,6 +241,7 @@ public static class DefaultStyles
 		style.Setters.Add(new Setter { Property = VisualElement.HeightRequestProperty, Value = 1.0 });
 		style.Setters.Add(new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.End });
 		style.Setters.Add(new Setter { Property = View.MarginProperty, Value = new Thickness(0, 0, 0, -1) });
+		
 		return style;
 	}
 }

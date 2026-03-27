@@ -14,7 +14,7 @@ public partial class Calendar : ContentView, IDisposable
 		nameof(EventIndicatorType),
 		typeof(EventIndicatorType),
 		typeof(Calendar),
-		EventIndicatorType.BottomDot,
+		EventIndicatorType.Bottom,
 		propertyChanged: OnEventIndicatorTypeChanged
 	);
 
@@ -35,115 +35,41 @@ public partial class Calendar : ContentView, IDisposable
 		}
 	}
 
+	public static readonly BindableProperty IsEventDayBackgroundColorActiveProperty = BindableProperty.Create(
+			nameof(IsEventDayBackgroundColorActive),
+			typeof(bool),
+			typeof(Calendar),
+			false
+		);
+
+	public bool IsEventDayBackgroundColorActive
+	{
+		get => (bool)GetValue(IsEventDayBackgroundColorActiveProperty);
+		set => SetValue(IsEventDayBackgroundColorActiveProperty, value);
+	}
+
 
 	/// <summary>
-	/// Bindable property for EventIndicatorColor
+	/// Bindable property for EventDayBackgroundColor
 	/// </summary>
-	public static readonly BindableProperty EventIndicatorColorProperty = BindableProperty.Create(
-		nameof(EventIndicatorColor),
+	public static readonly BindableProperty EventDayBackgroundColorProperty = BindableProperty.Create(
+		nameof(EventDayBackgroundColor),
 		typeof(Color),
 		typeof(Calendar),
-		Color.FromArgb("#FF4081"),
-		propertyChanged: OnEventIndicatorColorChanged
+		Colors.DeepPink,
+		propertyChanged: OnEventDayBackgroundColorChanged
 	);
 
 	/// <summary>
 	/// Specifies the color of the event indicators
 	/// </summary>
-	public Color EventIndicatorColor
+	public Color EventDayBackgroundColor
 	{
-		get => (Color)GetValue(EventIndicatorColorProperty);
-		set => SetValue(EventIndicatorColorProperty, value);
+		get => (Color)GetValue(EventDayBackgroundColorProperty);
+		set => SetValue(EventDayBackgroundColorProperty, value);
 	}
 
-	static void OnEventIndicatorColorChanged(BindableObject bindable, object oldValue, object newValue)
-	{
-		if (bindable is Calendar calendar)
-		{
-			calendar.UpdateDaysColors();
-		}
-	}
-
-
-	/// <summary>
-	/// Bindable property for EventIndicatorSelectedColor
-	/// </summary>
-	public static readonly BindableProperty EventIndicatorSelectedColorProperty = BindableProperty.Create(
-			nameof(EventIndicatorSelectedColor),
-			typeof(Color),
-			typeof(Calendar),
-			Color.FromArgb("#FF4081"),
-			propertyChanged: OnEventIndicatorSelectedColorChanged
-		);
-
-	/// <summary>
-	/// Specifies the color of the event indicators on selected dates
-	/// </summary>
-	public Color EventIndicatorSelectedColor
-	{
-		get => (Color)GetValue(EventIndicatorSelectedColorProperty);
-		set => SetValue(EventIndicatorSelectedColorProperty, value);
-	}
-
-	static void OnEventIndicatorSelectedColorChanged(BindableObject bindable, object oldValue, object newValue)
-	{
-		if (bindable is Calendar calendar)
-		{
-			calendar.UpdateDaysColors();
-		}
-	}
-
-
-	/// <summary>
-	/// Bindable property for EventIndicatorTextColor
-	/// </summary>
-	public static readonly BindableProperty EventIndicatorTextColorProperty = BindableProperty.Create(
-			nameof(EventIndicatorTextColor),
-			typeof(Color),
-			typeof(Calendar),
-			Colors.Black,
-			propertyChanged: OnEventIndicatorTextColorChanged
-		);
-
-	/// <summary>
-	/// Specifies the color of the event indicator text
-	/// </summary>
-	public Color EventIndicatorTextColor
-	{
-		get => (Color)GetValue(EventIndicatorTextColorProperty);
-		set => SetValue(EventIndicatorTextColorProperty, value);
-	}
-
-	static void OnEventIndicatorTextColorChanged(BindableObject bindable, object oldValue, object newValue)
-	{
-		if (bindable is Calendar calendar)
-		{
-			calendar.UpdateDaysColors();
-		}
-	}
-
-
-	/// <summary>
-	/// Bindable property for EventIndicatorSelectedText
-	/// </summary>
-	public static readonly BindableProperty EventIndicatorSelectedTextColorProperty = BindableProperty.Create(
-			nameof(EventIndicatorSelectedTextColor),
-			typeof(Color),
-			typeof(Calendar),
-			Colors.Black,
-			propertyChanged: OnEventIndicatorSelectedTextColorChanged
-		);
-
-	/// <summary>
-	/// Specifies the color of the event indicator text on selected dates
-	/// </summary>
-	public Color EventIndicatorSelectedTextColor
-	{
-		get => (Color)GetValue(EventIndicatorSelectedTextColorProperty);
-		set => SetValue(EventIndicatorSelectedTextColorProperty, value);
-	}
-
-	static void OnEventIndicatorSelectedTextColorChanged(BindableObject bindable, object oldValue, object newValue)
+	static void OnEventDayBackgroundColorChanged(BindableObject bindable, object oldValue, object newValue)
 	{
 		if (bindable is Calendar calendar)
 		{

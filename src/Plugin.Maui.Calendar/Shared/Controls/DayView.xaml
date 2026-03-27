@@ -7,7 +7,6 @@
     xmlns:models="clr-namespace:Plugin.Maui.Calendar.Models"
     xmlns:selectors="clr-namespace:Plugin.Maui.Calendar.Selectors"
     x:Name="dayView"
-    Margin="4"
     x:DataType="models:DayModel"
     BackgroundColor="{Binding BackgroundFullEventColor}"
     IsVisible="{Binding IsControlVisible, Mode=OneWay}">
@@ -19,11 +18,13 @@
             <conv:ImageSourceToBoolConverter x:Key="ImageSourceToBoolConverter" />
 
             <DataTemplate x:Key="DotTemplate" x:DataType="models:EventIndicator">
-                <Border BackgroundColor="{Binding DotColor}" Style="{Binding BindingContext.EventIndicatorStyle, Source={x:Reference dayView}}" />
+                <Border BackgroundColor="{Binding DotColor}" Style="{Binding BindingContext.EventIndicatorDotStyle, Source={x:Reference dayView}}" />
             </DataTemplate>
 
             <DataTemplate x:Key="TextTemplate" x:DataType="models:EventIndicator">
-                <Label Style="{Binding BindingContext.EventIndicatorTextStyle, Source={x:Reference dayView}}" Text="{Binding Text}" />
+                <Border Style="{Binding BindingContext.EventIndicatorTextContainerStyle, Source={x:Reference dayView}}">
+                    <Label Style="{Binding BindingContext.EventIndicatorTextStyle, Source={x:Reference dayView}}" Text="{Binding Text}" />
+                </Border>
             </DataTemplate>
 
             <DataTemplate x:Key="ImageTemplate" x:DataType="models:EventIndicator">
@@ -64,15 +65,20 @@
                 TextColor="{Binding TextColor, Mode=OneWay}" />
         </Border>
 
-        <HorizontalStackLayout
+
+        <ContentView
             Grid.Row="{Binding EventIndicatorRowIndex}"
-            BindableLayout.ItemTemplateSelector="{StaticResource IndicatorSelector}"
-            BindableLayout.ItemsSource="{Binding EventIndicators, Mode=OneWay}"
+            BackgroundColor="Yellow"
             HeightRequest="{Binding DayIndicatorViewSize, Mode=OneWay}"
-            HorizontalOptions="Center"
-            IsClippedToBounds="True"
-            Spacing="3"
-            VerticalOptions="Center" />
+            IsClippedToBounds="True">
+            <HorizontalStackLayout
+                BindableLayout.ItemTemplateSelector="{StaticResource IndicatorSelector}"
+                BindableLayout.ItemsSource="{Binding EventIndicators, Mode=OneWay}"
+                HorizontalOptions="Center"
+                Spacing="3"
+                VerticalOptions="Center" />
+
+        </ContentView>
 
     </Grid>
 </ContentView>

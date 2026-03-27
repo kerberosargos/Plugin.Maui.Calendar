@@ -14,16 +14,10 @@ public class DayEventCollection<T> : List<T>, IPersonalizableDayEvent, IMultiEve
     public DayEventCollection() : base()
     { }
 
-    /// <summary>
-    /// Color contructor extends from base()
-    /// </summary>
-    /// <param name="eventIndicatorColor"></param>
-    /// <param name="eventIndicatorSelectedColor"></param>
-    public DayEventCollection(Color eventIndicatorColor, Color eventIndicatorSelectedColor, EventIndicator eventIndicator = null) : base()
+
+    public DayEventCollection(EventIndicator eventIndicator) : base()
     {
-        EventIndicatorColor = eventIndicatorColor;
-        EventIndicatorSelectedColor = eventIndicatorSelectedColor;
-		EventIndicator = eventIndicator ?? new EventIndicator();
+		EventIndicator = eventIndicator;
     }
 
     /// <summary>
@@ -41,11 +35,7 @@ public class DayEventCollection<T> : List<T>, IPersonalizableDayEvent, IMultiEve
     public DayEventCollection(int capacity) : base(capacity)
     { }
 
-    #region PersonalizableProperties
-    public Color EventIndicatorColor { get; set; }
-    public Color EventIndicatorSelectedColor { get; set; }
-    public Color EventIndicatorTextColor { get; set; }
-    public Color EventIndicatorSelectedTextColor { get; set; }
+	#region PersonalizableProperties
 	public EventIndicator EventIndicator { get; set; }
 
 

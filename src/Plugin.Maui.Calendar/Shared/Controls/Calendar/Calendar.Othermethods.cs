@@ -182,32 +182,30 @@ public partial class Calendar : ContentView, IDisposable
 		UpdateDays();
 	}
 
-	internal void AssignIndicatorColors(ref DayModel dayModel)
+	internal void AssignEventIndicatorColors(ref DayModel dayModel)
 	{
 		dayModel.DayViewSize = DayViewSize;
+		dayModel.IsEventDayBackgroundColorActive = IsEventDayBackgroundColorActive;
+		dayModel.EventDayBackgroundColor = EventDayBackgroundColor;
 		dayModel.DayIndicatorViewSize = DayIndicatorViewSize;
 		dayModel.DayViewCornerRadius = DayViewCornerRadius;
-		dayModel.EventIndicatorStyle = EventIndicatorStyle;
+		dayModel.EventIndicatorDotStyle = EventIndicatorDotStyle;
+		dayModel.EventIndicatorTextContainerStyle = EventIndicatorTextContainerStyle;
 		dayModel.EventIndicatorTextStyle = EventIndicatorTextStyle;
 		dayModel.EventIndicatorImageStyle = EventIndicatorImageStyle;
 
+		EventIndicator personalizableDayEventIndicator = null;
+
 		if (Events.TryGetValue(dayModel.Date, out var dayEventCollection))
 		{
+
+			dayModel.HasEvents = true;
+
 			if (dayEventCollection is IPersonalizableDayEvent personalizableDay)
 			{
-				dayModel.EventIndicatorColor =
-					personalizableDay?.EventIndicatorColor ?? EventIndicatorColor;
-				dayModel.EventIndicatorSelectedColor =
-					personalizableDay?.EventIndicatorSelectedColor
-				 ?? personalizableDay?.EventIndicatorColor
-				 ?? EventIndicatorSelectedColor;
-				dayModel.EventIndicatorTextColor =
-					personalizableDay?.EventIndicatorTextColor ?? EventIndicatorTextColor;
-				dayModel.EventIndicatorSelectedTextColor =
-					personalizableDay?.EventIndicatorSelectedTextColor
-				 ?? personalizableDay?.EventIndicatorTextColor
-				 ?? EventIndicatorSelectedTextColor;
+				personalizableDayEventIndicator = personalizableDay.EventIndicator;
 			}
+
 			if (dayEventCollection is IMultiEventDay multiEventDay)
 			{
 				dayModel.EventIndicators = multiEventDay.EventIndicators
@@ -222,17 +220,17 @@ public partial class Calendar : ContentView, IDisposable
 			}
 			else
 			{
-				dayModel.EventIndicators =
-				[
-					new EventIndicator()
-					{
-						DotColor = dayModel.IsSelected ? dayModel.EventIndicatorSelectedColor : dayModel.EventIndicatorColor,
-					}
-				];
+				
+				if(personalizableDayEventIndicator != null)
+				{
+					dayModel.EventIndicators = [personalizableDayEventIndicator];
+				}
+
 			}
 		}
 		else
 		{
+			dayModel.HasEvents = false;
 			dayModel.EventIndicators = [];
 		}
 	}

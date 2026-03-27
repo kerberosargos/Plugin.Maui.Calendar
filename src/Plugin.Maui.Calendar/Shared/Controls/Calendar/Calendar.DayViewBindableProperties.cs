@@ -118,17 +118,31 @@ public partial class Calendar : ContentView, IDisposable
 		}
 	}
 
-	public static readonly BindableProperty EventIndicatorStyleProperty = BindableProperty.Create(
-	nameof(EventIndicatorStyle),
+	public static readonly BindableProperty EventIndicatorDotStyleProperty = BindableProperty.Create(
+	nameof(EventIndicatorDotStyle),
 	typeof(Style),
 	typeof(Calendar),
-	DefaultStyles.DefaultEventIndicatorStyle,
+	DefaultStyles.DefaultEventIndicatorDotStyle,
 	propertyChanged: (b, o, n) => (b as Calendar)?.UpdateDays(true));
 
-	public Style EventIndicatorStyle
+	public Style EventIndicatorDotStyle
 	{
-		get => (Style)GetValue(EventIndicatorStyleProperty);
-		set => SetValue(EventIndicatorStyleProperty, value);
+		get => (Style)GetValue(EventIndicatorDotStyleProperty);
+		set => SetValue(EventIndicatorDotStyleProperty, value);
+	}
+
+	// EventIndicatorTextContainerStyle
+	public static readonly BindableProperty EventIndicatorTextContainerStyleProperty = BindableProperty.Create(
+		nameof(EventIndicatorTextContainerStyle),
+		typeof(Style),
+		typeof(Calendar),
+		DefaultStyles.DefaultEventIndicatorTextContainerStyle,
+		propertyChanged: (b, o, n) => (b as Calendar)?.UpdateDays(true));
+
+	public Style EventIndicatorTextContainerStyle
+	{
+		get => (Style)GetValue(EventIndicatorTextContainerStyleProperty);
+		set => SetValue(EventIndicatorTextContainerStyleProperty, value);
 	}
 
 	// EventIndicatorTextStyle

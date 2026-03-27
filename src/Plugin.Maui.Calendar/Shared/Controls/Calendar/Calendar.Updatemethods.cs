@@ -168,8 +168,9 @@ public partial class Calendar : ContentView, IDisposable
 				dayModel.DayViewBorderMargin = DayViewBorderMargin;
 				dayModel.DayViewCornerRadius = DayViewCornerRadius;
 				dayModel.DaysLabelStyle = DaysLabelStyle;
-				dayModel.EventIndicatorStyle = EventIndicatorStyle;
+				dayModel.EventIndicatorDotStyle = EventIndicatorDotStyle;
 				dayModel.EventIndicatorTextStyle = EventIndicatorTextStyle;
+				dayModel.EventIndicatorTextContainerStyle = EventIndicatorTextContainerStyle;
 				dayModel.EventIndicatorImageStyle = EventIndicatorImageStyle;
 				dayModel.IsThisMonth = CalendarLayout != WeekLayout.Month || currentDate.Month == ShownDate.Month;
 				dayModel.OtherMonthIsVisible = CalendarLayout != WeekLayout.Month || OtherMonthDayIsVisible;
@@ -179,7 +180,7 @@ public partial class Calendar : ContentView, IDisposable
 				dayModel.AllowDeselect = AllowDeselecting;
 
 				dayModel.IsSelected = CurrentSelectionEngine.IsDateSelected(dayModel.Date);
-				AssignIndicatorColors(ref dayModel);
+				AssignEventIndicatorColors(ref dayModel);
 			}
 			else
 			{
@@ -194,7 +195,8 @@ public partial class Calendar : ContentView, IDisposable
 				dayModel.DayViewBorderMargin = DayViewBorderMargin;
 				dayModel.DayViewCornerRadius = DayViewCornerRadius;
 				dayModel.DaysLabelStyle = DaysLabelStyle;
-				dayModel.EventIndicatorStyle = EventIndicatorStyle;
+				dayModel.EventIndicatorDotStyle = EventIndicatorDotStyle;
+				dayModel.EventIndicatorTextContainerStyle = EventIndicatorTextContainerStyle;
 				dayModel.EventIndicatorTextStyle = EventIndicatorTextStyle;
 				dayModel.EventIndicatorImageStyle = EventIndicatorImageStyle;
 				dayModel.IsThisMonth = false;
@@ -204,7 +206,7 @@ public partial class Calendar : ContentView, IDisposable
 				dayModel.IsDisabled = true;
 				dayModel.AllowDeselect = AllowDeselecting;
 				dayModel.IsSelected = false;
-				AssignIndicatorColors(ref dayModel);
+				AssignEventIndicatorColors(ref dayModel);
 			}
 		}
 	}
@@ -227,7 +229,7 @@ public partial class Calendar : ContentView, IDisposable
 			dayModel.TodayFillColor = TodayFillColor;
 			dayModel.DisabledColor = DisabledDayColor;
 
-			AssignIndicatorColors(ref dayModel);
+			AssignEventIndicatorColors(ref dayModel);
 		}
 	}
 }
