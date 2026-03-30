@@ -162,9 +162,8 @@ public partial class Calendar : ContentView, IDisposable
 				dayModel.Date = currentDate.Date;
 				dayModel.Day = UseNativeDigits ? currentDate.Day.ToNativeDigitString(Culture) : currentDate.Day.ToString(Culture);
 				dayModel.DayTappedCommand = DayTappedCommand;
-				dayModel.EventIndicatorType = EventIndicatorType;
+				dayModel.EventIndicatorType = EventIndicatorPlacementType;
 				dayModel.DayViewSize = DayViewSize;
-				dayModel.DayIndicatorViewSize = DayIndicatorViewSize;
 				dayModel.DayViewBorderMargin = DayViewBorderMargin;
 				dayModel.DayViewCornerRadius = DayViewCornerRadius;
 				dayModel.DaysLabelStyle = DaysLabelStyle;
@@ -189,9 +188,8 @@ public partial class Calendar : ContentView, IDisposable
 				dayModel.Date = DateTime.MaxValue.Date;
 				dayModel.Day = string.Empty;
 				dayModel.DayTappedCommand = DayTappedCommand;
-				dayModel.EventIndicatorType = EventIndicatorType;
+				dayModel.EventIndicatorType = EventIndicatorPlacementType;
 				dayModel.DayViewSize = DayViewSize;
-				dayModel.DayIndicatorViewSize = DayIndicatorViewSize;
 				dayModel.DayViewBorderMargin = DayViewBorderMargin;
 				dayModel.DayViewCornerRadius = DayViewCornerRadius;
 				dayModel.DaysLabelStyle = DaysLabelStyle;

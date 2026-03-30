@@ -17,18 +17,24 @@
             <conv:StrokeShapeConverter x:Key="StrokeShapeConverter" />
             <conv:ImageSourceToBoolConverter x:Key="ImageSourceToBoolConverter" />
 
-            <DataTemplate x:Key="DotTemplate" x:DataType="models:EventIndicator">
-                <Border BackgroundColor="{Binding DotColor}" Style="{Binding BindingContext.EventIndicatorDotStyle, Source={x:Reference dayView}}" />
+            <DataTemplate x:Key="DotTemplate" x:DataType="models:EventIndicatorModel">
+                <Border
+                    BackgroundColor="{Binding DotColor}"
+                    Style="{Binding BindingContext.EventIndicatorDotStyle, Source={x:Reference dayView}}"
+                    VerticalOptions="{Binding BindingContext.DayIndicatorViewVerticalOptions, Mode=OneWay, Source={x:Reference dayView}}" />
             </DataTemplate>
 
-            <DataTemplate x:Key="TextTemplate" x:DataType="models:EventIndicator">
-                <Border Style="{Binding BindingContext.EventIndicatorTextContainerStyle, Source={x:Reference dayView}}">
+            <DataTemplate x:Key="TextTemplate" x:DataType="models:EventIndicatorModel">
+                <Border Style="{Binding BindingContext.EventIndicatorTextContainerStyle, Source={x:Reference dayView}}" VerticalOptions="{Binding BindingContext.DayIndicatorViewVerticalOptions, Mode=OneWay, Source={x:Reference dayView}}">
                     <Label Style="{Binding BindingContext.EventIndicatorTextStyle, Source={x:Reference dayView}}" Text="{Binding Text}" />
                 </Border>
             </DataTemplate>
 
-            <DataTemplate x:Key="ImageTemplate" x:DataType="models:EventIndicator">
-                <Image Source="{Binding ImageSource}" Style="{Binding BindingContext.EventIndicatorImageStyle, Source={x:Reference dayView}}" />
+            <DataTemplate x:Key="ImageTemplate" x:DataType="models:EventIndicatorModel">
+                <Image
+                    Source="{Binding ImageSource}"
+                    Style="{Binding BindingContext.EventIndicatorImageStyle, Source={x:Reference dayView}}"
+                    VerticalOptions="{Binding BindingContext.DayIndicatorViewVerticalOptions, Mode=OneWay, Source={x:Reference dayView}}" />
             </DataTemplate>
 
             <selectors:EventIndicatorTemplateSelector
@@ -40,14 +46,14 @@
         </ResourceDictionary>
     </ContentView.Resources>
 
-    <Grid IsVisible="{Binding IsVisible, Mode=OneWay}" RowDefinitions="Auto,Auto">
+    <Grid IsVisible="{Binding IsVisible, Mode=OneWay}">
 
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnTapped" />
         </Grid.GestureRecognizers>
 
         <Border
-            Grid.Row="{Binding DayRowIndex}"
+            Grid.Row="0"
             Margin="{Binding DayViewBorderMargin, Mode=OneWay}"
             Padding="0"
             BackgroundColor="{Binding BackgroundColor, Mode=OneWay}"
@@ -67,10 +73,10 @@
 
 
         <ContentView
-            Grid.Row="{Binding EventIndicatorRowIndex}"
-            BackgroundColor="Yellow"
-            HeightRequest="{Binding DayIndicatorViewSize, Mode=OneWay}"
-            IsClippedToBounds="True">
+            Grid.Row="0"
+            Margin="{Binding DayIndicatorViewMargin, Mode=OneWay}"
+            IsClippedToBounds="True"
+            VerticalOptions="{Binding DayIndicatorViewVerticalOptions, Mode=OneWay}">
             <HorizontalStackLayout
                 BindableLayout.ItemTemplateSelector="{StaticResource IndicatorSelector}"
                 BindableLayout.ItemsSource="{Binding EventIndicators, Mode=OneWay}"

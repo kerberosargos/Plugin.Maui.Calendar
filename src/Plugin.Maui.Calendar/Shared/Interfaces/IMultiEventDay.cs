@@ -4,5 +4,5 @@ namespace Plugin.Maui.Calendar.Interfaces;
 
 public interface IMultiEventDay
 {
-    IReadOnlyList<EventIndicator> EventIndicators { get; }
+    IReadOnlyList<EventIndicatorModel> EventIndicators { get; }
 }

@@ -2,7 +2,7 @@
 
 namespace Plugin.Maui.Calendar.Models;
 
-public sealed partial class EventIndicator : ObservableObject
+public sealed partial class EventIndicatorModel : ObservableObject
 {
 	[ObservableProperty]
 	Color dotColor;

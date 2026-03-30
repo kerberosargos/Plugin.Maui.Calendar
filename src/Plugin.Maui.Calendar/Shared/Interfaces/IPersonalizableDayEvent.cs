@@ -9,7 +9,7 @@ public interface IPersonalizableDayEvent
 {
     #region PersonalizableProperties
   
-	EventIndicator EventIndicator { get; set; }
+	EventIndicatorModel EventIndicator { get; set; }
 
 	#endregion
 }

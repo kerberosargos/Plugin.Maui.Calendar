@@ -15,7 +15,7 @@ public class DayEventCollection<T> : List<T>, IPersonalizableDayEvent, IMultiEve
     { }
 
 
-    public DayEventCollection(EventIndicator eventIndicator) : base()
+    public DayEventCollection(EventIndicatorModel eventIndicator) : base()
     {
 		EventIndicator = eventIndicator;
     }
@@ -36,12 +36,12 @@ public class DayEventCollection<T> : List<T>, IPersonalizableDayEvent, IMultiEve
     { }
 
 	#region PersonalizableProperties
-	public EventIndicator EventIndicator { get; set; }
+	public EventIndicatorModel EventIndicator { get; set; }
 
 
 	#endregion
 
 	#region IMultiEventDay
-	public IReadOnlyList<EventIndicator> EventIndicators { get; set; }
+	public IReadOnlyList<EventIndicatorModel> EventIndicators { get; set; }
 	#endregion
 }

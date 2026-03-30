@@ -3,7 +3,7 @@
 /// <summary>
 /// Set type of event indicator on calendar
 /// </summary>
-public enum EventIndicatorType
+public enum EventIndicatorPlacementType
 {
     /// <summary>
     /// Set event indicator as dot bellow of date in calendar

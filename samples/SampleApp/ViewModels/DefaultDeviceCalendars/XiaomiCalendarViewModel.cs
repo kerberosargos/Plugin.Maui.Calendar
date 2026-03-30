@@ -40,7 +40,7 @@ public partial class XiaomiCalendarViewModel : BasePageViewModel, IQueryAttribut
             {
                 if (Events.TryGetValue(updatedEvent.Starting, out var existingCollection))
                 {
-                    var newEventCollection = new DayEventCollection<AdvancedEventModel>(new EventIndicator() { DotColor = Colors.Yellow  });
+                    var newEventCollection = new DayEventCollection<AdvancedEventModel>(new EventIndicatorModel() { DotColor = Colors.Yellow  });
 
                     foreach (var item in existingCollection)
                     {

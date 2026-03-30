@@ -24,32 +24,13 @@ public partial class Calendar : ContentView, IDisposable
 	}
 
 	/// <summary>
-	/// Bindable property for DayIndicatorViewSize
-	/// </summary>
-	public static readonly BindableProperty DayIndicatorViewSizeProperty = BindableProperty.Create(
-		nameof(DayIndicatorViewSize),
-		typeof(double),
-		typeof(Calendar),
-		20.0
-	);
-
-	/// <summary>
-	/// Specifies the size of individual dates
-	/// </summary>
-	public double DayIndicatorViewSize
-	{
-		get => (double)GetValue(DayIndicatorViewSizeProperty);
-		set => SetValue(DayIndicatorViewSizeProperty, value);
-	}
-
-	/// <summary>
 	/// Bindable property for DayViewBorderMargin
 	/// </summary>
 	public static readonly BindableProperty DayViewBorderMarginProperty = BindableProperty.Create(
 		nameof(DayViewBorderMargin),
 		typeof(Thickness),
 		typeof(Calendar),
-		default(Thickness)
+		new Thickness(8)
 	);
 
 	/// <summary>

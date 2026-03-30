@@ -8,7 +8,7 @@ public class EventIndicatorTemplateSelector : DataTemplateSelector
 
 	protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
 	{
-		var indicator = (Models.EventIndicator)item;
+		var indicator = (Models.EventIndicatorModel)item;
 
 		if (indicator.ImageSource != null)
 		{

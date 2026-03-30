@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections;
+using System.Globalization;
 using Plugin.Maui.Calendar.Controls.SelectionEngines;
 using Plugin.Maui.Calendar.Controls.ViewLayoutEngines;
 using Plugin.Maui.Calendar.Enums;
@@ -126,13 +127,10 @@ public partial class Calendar : ContentView, IDisposable
 
 	void OnSwipeDown() => SwipedDown?.Invoke(this, EventArgs.Empty);
 
-
-
 	public void InitializeViewLayoutEngine()
 	{
 		CurrentViewLayoutEngine = new MonthViewEngine(FirstDayOfWeek);
 	}
-
 
 	void RenderLayout()
 	{
@@ -161,7 +159,7 @@ public partial class Calendar : ContentView, IDisposable
 
 		for (int i = 0; i < generatedLayout.RowDefinitions.Count; i++)
 		{
-			if (i > 0) // Day Titles
+			if (i > 0 && SeparatorIsVisible) // Day Titles
 			{
 				var separator = new BoxView { Style = SeparatorStyle };
 				Grid.SetRow(separator, i);
@@ -184,48 +182,22 @@ public partial class Calendar : ContentView, IDisposable
 
 	internal void AssignEventIndicatorColors(ref DayModel dayModel)
 	{
-		dayModel.DayViewSize = DayViewSize;
-		dayModel.IsEventDayBackgroundColorActive = IsEventDayBackgroundColorActive;
-		dayModel.EventDayBackgroundColor = EventDayBackgroundColor;
-		dayModel.DayIndicatorViewSize = DayIndicatorViewSize;
-		dayModel.DayViewCornerRadius = DayViewCornerRadius;
-		dayModel.EventIndicatorDotStyle = EventIndicatorDotStyle;
-		dayModel.EventIndicatorTextContainerStyle = EventIndicatorTextContainerStyle;
-		dayModel.EventIndicatorTextStyle = EventIndicatorTextStyle;
-		dayModel.EventIndicatorImageStyle = EventIndicatorImageStyle;
+		SyncDayModelStyles(dayModel);
 
-		EventIndicator personalizableDayEventIndicator = null;
-
-		if (Events.TryGetValue(dayModel.Date, out var dayEventCollection))
+		if (Events.TryGetValue(dayModel.Date, out var dayEventCollection) && dayEventCollection is IEnumerable collection)
 		{
+			var enumerator = collection.GetEnumerator();
+			bool hasAnyItem = enumerator.MoveNext();
 
-			dayModel.HasEvents = true;
+			dayModel.HasEvents = hasAnyItem;
 
-			if (dayEventCollection is IPersonalizableDayEvent personalizableDay)
+			if (hasAnyItem)
 			{
-				personalizableDayEventIndicator = personalizableDay.EventIndicator;
-			}
-
-			if (dayEventCollection is IMultiEventDay multiEventDay)
-			{
-				dayModel.EventIndicators = multiEventDay.EventIndicators
-				.Take(5)
-				.Select(e => new EventIndicator
-				{
-					DotColor = e.DotColor,
-					Text = e.Text,
-					ImageSource = e.ImageSource,
-				})
-				.ToList();
+				dayModel.EventIndicators = ResolveEventIndicators(dayEventCollection);
 			}
 			else
 			{
-				
-				if(personalizableDayEventIndicator != null)
-				{
-					dayModel.EventIndicators = [personalizableDayEventIndicator];
-				}
-
+				dayModel.EventIndicators = [];
 			}
 		}
 		else
@@ -233,6 +205,44 @@ public partial class Calendar : ContentView, IDisposable
 			dayModel.HasEvents = false;
 			dayModel.EventIndicators = [];
 		}
+	}
+
+	internal void SyncDayModelStyles(DayModel dayModel)
+	{
+		dayModel.DayViewSize = DayViewSize;
+		dayModel.EventDayBackgroundColorIsActive = EventDayBackgroundColorIsActive;
+		dayModel.EventDayBackgroundColor = EventDayBackgroundColor;
+		dayModel.DayViewBorderMargin = DayViewBorderMargin;
+		dayModel.DayViewCornerRadius = DayViewCornerRadius;
+		dayModel.EventIndicatorDotStyle = EventIndicatorDotStyle;
+		dayModel.EventIndicatorTextContainerStyle = EventIndicatorTextContainerStyle;
+		dayModel.EventIndicatorTextStyle = EventIndicatorTextStyle;
+		dayModel.EventIndicatorImageStyle = EventIndicatorImageStyle;
+	}
+
+	internal List<EventIndicatorModel> ResolveEventIndicators(object dayEventCollection)
+	{
+		if (dayEventCollection is IMultiEventDay { EventIndicators.Count: > 0 } multiEventDay)
+		{
+			return multiEventDay.EventIndicators
+				.Take(5)
+				.Select(e => new EventIndicatorModel
+				{
+					DotColor = e.DotColor,
+					Text = e.Text,
+					ImageSource = e.ImageSource,
+				}).ToList();
+		}
+
+		if (dayEventCollection is IPersonalizableDayEvent { EventIndicator: not null } personalizableDay)
+		{
+			return [personalizableDay.EventIndicator];
+		}
+
+		return
+		[
+			new EventIndicatorModel { DotColor = EventDefaultIndicatorColor ?? Colors.DeepPink }
+		];
 	}
 
 	void InitializeSelectionType()

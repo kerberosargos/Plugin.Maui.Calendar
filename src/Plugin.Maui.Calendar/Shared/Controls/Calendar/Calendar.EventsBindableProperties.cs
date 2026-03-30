@@ -10,24 +10,24 @@ public partial class Calendar : ContentView, IDisposable
 	/// <summary>
 	/// Bindable property for EventIndicatorType
 	/// </summary>
-	public static readonly BindableProperty EventIndicatorTypeProperty = BindableProperty.Create(
-		nameof(EventIndicatorType),
-		typeof(EventIndicatorType),
+	public static readonly BindableProperty EventIndicatorPlacementTypeProperty = BindableProperty.Create(
+		nameof(EventIndicatorPlacementType),
+		typeof(EventIndicatorPlacementType),
 		typeof(Calendar),
-		EventIndicatorType.Bottom,
-		propertyChanged: OnEventIndicatorTypeChanged
+		EventIndicatorPlacementType.Bottom,
+		propertyChanged: OnEventIndicatorPlacementTypeChanged
 	);
 
 	/// <summary>
 	/// Specifies the way in which events will be shown on dates
 	/// </summary>
-	public EventIndicatorType EventIndicatorType
+	public EventIndicatorPlacementType EventIndicatorPlacementType
 	{
-		get => (EventIndicatorType)GetValue(EventIndicatorTypeProperty);
-		set => SetValue(EventIndicatorTypeProperty, value);
+		get => (EventIndicatorPlacementType)GetValue(EventIndicatorPlacementTypeProperty);
+		set => SetValue(EventIndicatorPlacementTypeProperty, value);
 	}
 
-	static void OnEventIndicatorTypeChanged(BindableObject bindable, object oldValue, object newValue)
+	static void OnEventIndicatorPlacementTypeChanged(BindableObject bindable, object oldValue, object newValue)
 	{
 		if (bindable is Calendar calendar)
 		{
@@ -35,17 +35,17 @@ public partial class Calendar : ContentView, IDisposable
 		}
 	}
 
-	public static readonly BindableProperty IsEventDayBackgroundColorActiveProperty = BindableProperty.Create(
-			nameof(IsEventDayBackgroundColorActive),
+	public static readonly BindableProperty EventDayBackgroundColorIsActiveProperty = BindableProperty.Create(
+			nameof(EventDayBackgroundColorIsActive),
 			typeof(bool),
 			typeof(Calendar),
 			false
 		);
 
-	public bool IsEventDayBackgroundColorActive
+	public bool EventDayBackgroundColorIsActive
 	{
-		get => (bool)GetValue(IsEventDayBackgroundColorActiveProperty);
-		set => SetValue(IsEventDayBackgroundColorActiveProperty, value);
+		get => (bool)GetValue(EventDayBackgroundColorIsActiveProperty);
+		set => SetValue(EventDayBackgroundColorIsActiveProperty, value);
 	}
 
 

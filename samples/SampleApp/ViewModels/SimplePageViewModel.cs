@@ -14,24 +14,32 @@ public partial class SimplePageViewModel : BasePageViewModel
 		Events = new EventCollection
 		{
 			[DateTime.Now.AddDays(-3)] = new List<EventModel>(GenerateEvents(10, "Cool")),
-			[DateTime.Now.AddDays(4)] = new List<EventModel>(GenerateEvents(2, "Simple2")),
-			[DateTime.Now.AddDays(2)] = new List<EventModel>(GenerateEvents(1, "Simple1")),
-
+			[DateTime.Now.AddDays(4)] = new DayEventCollection<EventModel>(GenerateEvents(2, "Simple2")),
+			[DateTime.Now.AddDays(2)] = new DayEventCollection<EventModel>(GenerateEvents(1, "Simple1"))
+			{
+				EventIndicators = new EventIndicatorModel[]
+				{
+					new EventIndicatorModel
+					{
+						ImageSource = "calendar"
+					}
+				}
+			},
 			[DateTime.Now.AddDays(1)] = new DayEventCollection<EventModel>(threeEventsTommorrow)
 			{
-				EventIndicators = new EventIndicator[]
+				EventIndicators = new EventIndicatorModel[]
 					{
-						new EventIndicator
+						new EventIndicatorModel
 						{
 							DotColor = Colors.Green
 						},
 
-						new EventIndicator
+						new EventIndicatorModel
 						{
-							Text = "3" 
+							Text = "3"
 						},
 
-						new EventIndicator
+						new EventIndicatorModel
 						{
 							ImageSource = "calendar"
 						}

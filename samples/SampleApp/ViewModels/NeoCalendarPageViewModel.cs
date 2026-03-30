@@ -19,7 +19,7 @@ public partial class NeoCalendarPageViewModel : BasePageViewModel
 			[DateTime.Now.AddDays(1)] = new DayEventCollection<EventModel>(threeEventsTommorrow)
 			{
 				// Hata buradaydı: Color dizisi yerine EventIndicator dizisi oluşturuyoruz
-				EventIndicators = threeEventsTommorrow.Select(e => new EventIndicator
+				EventIndicators = threeEventsTommorrow.Select(e => new EventIndicatorModel
 				{
 					DotColor = e.IndicatorBackgroundColor,
 					Text = "!", // Test için metin ekleyebilirsin

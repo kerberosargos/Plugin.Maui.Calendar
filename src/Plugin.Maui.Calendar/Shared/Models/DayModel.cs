@@ -18,7 +18,8 @@ sealed partial class DayModel : ObservableObject
 	string day;
 
 	[ObservableProperty]
-	Thickness dayViewBorderMargin = new(0, 0, 0, 0);
+	[NotifyPropertyChangedFor(nameof(DayIndicatorViewMargin))] 
+	Thickness dayViewBorderMargin = new(8);
 
 	[ObservableProperty]
 	double dayViewSize;
@@ -36,7 +37,7 @@ sealed partial class DayModel : ObservableObject
 	[NotifyPropertyChangedFor(
 		nameof(BackgroundFullEventColor)
 	)]
-	bool isEventDayBackgroundColorActive = false;
+	bool eventDayBackgroundColorIsActive = false;
 
 	[ObservableProperty]
 	[NotifyPropertyChangedFor(
@@ -66,8 +67,6 @@ sealed partial class DayModel : ObservableObject
 		nameof(BackgroundFullEventColor)
 	)]
 	[NotifyPropertyChangedFor(
-		nameof(DayRowIndex), 
-		nameof(EventIndicatorRowIndex),
 		nameof(BackgroundFullEventColor)
 	)] 
 	bool hasEvents;
@@ -139,13 +138,12 @@ sealed partial class DayModel : ObservableObject
 	[ObservableProperty]
 	[NotifyPropertyChangedFor(
 		nameof(BackgroundColor),
-		nameof(DayRowIndex), 
-		nameof(EventIndicatorRowIndex)
+		nameof(DayIndicatorViewVerticalOptions)
 	)]
-	EventIndicatorType eventIndicatorType = EventIndicatorType.Bottom;
+	EventIndicatorPlacementType eventIndicatorType = EventIndicatorPlacementType.Bottom;
 
 	[ObservableProperty]
-	List<EventIndicator> eventIndicators;
+	List<EventIndicatorModel> eventIndicators;
 
 	[ObservableProperty]
 	[NotifyPropertyChangedFor(nameof(OutlineColor))]
@@ -162,11 +160,24 @@ sealed partial class DayModel : ObservableObject
 	[ObservableProperty]
 	Color disabledColor = Color.FromArgb("#ECECEC");
 
-	public int DayRowIndex => (HasEvents && EventIndicatorType == EventIndicatorType.Top) ? 1 : 0;
+	public Thickness DayIndicatorViewMargin
+	{
+		get
+		{
+			double minMargin = 2.0;
 
-	public int EventIndicatorRowIndex => (EventIndicatorType == EventIndicatorType.Top) ? 0 : 1;
+			return new Thickness(
+				Math.Max(DayViewBorderMargin.Left / 4, minMargin),
+				Math.Max(DayViewBorderMargin.Top / 4, minMargin),
+				Math.Max(DayViewBorderMargin.Right / 4, minMargin),
+				Math.Max(DayViewBorderMargin.Bottom / 4, minMargin)
+			);
+		}
+	}
 
-	public Color BackgroundFullEventColor => HasEvents && IsEventDayBackgroundColorActive ? EventDayBackgroundColor : Colors.Transparent;
+	public LayoutOptions DayIndicatorViewVerticalOptions =>  EventIndicatorType == EventIndicatorPlacementType.Top ? LayoutOptions.Start : LayoutOptions.End;
+
+	public Color BackgroundFullEventColor => HasEvents && EventDayBackgroundColorIsActive ? EventDayBackgroundColor : Colors.Transparent;
 
 	public Color OutlineColor => IsToday && !IsSelected ? TodayOutlineColor : Colors.Transparent;
 

@@ -196,6 +196,7 @@ public static class DefaultStyles
 		style.Setters.Add(new Setter() { Property = Border.StrokeShapeProperty, Value = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 5 } });
 		style.Setters.Add(new Setter() { Property = View.MarginProperty, Value = new Thickness(0) });
 		style.Setters.Add(new Setter() { Property = Border.PaddingProperty, Value = new Thickness(0) });
+		style.Setters.Add(new Setter() { Property = Border.StrokeThicknessProperty, Value = 0 });
 		
 		return style;
 	}
@@ -208,7 +209,9 @@ public static class DefaultStyles
 		style.Setters.Add(new Setter() { Property = Border.StrokeShapeProperty, Value = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 9 } });
 		style.Setters.Add(new Setter() { Property = View.MarginProperty, Value = new Thickness(0) });
 		style.Setters.Add(new Setter() { Property = Border.PaddingProperty, Value = new Thickness(0) });
-		
+		style.Setters.Add(new Setter() { Property = Border.StrokeThicknessProperty, Value = 0 });
+		style.Setters.Add(new Setter() { Property = VisualElement.BackgroundColorProperty, Value = Colors.White });
+
 		return style;
 	}
 

@@ -615,4 +615,40 @@ public partial class Calendar : ContentView, IDisposable
 		get => (Style)GetValue(SeparatorStyleProperty);
 		set => SetValue(SeparatorStyleProperty, value);
 	}
+
+	public static readonly BindableProperty SeparatorIsVisibleProperty = BindableProperty.Create
+	(
+		nameof(SeparatorIsVisible),
+		typeof(bool),
+		typeof(Calendar),
+		true,
+		propertyChanged: OnSeparatorIsVisibleChanged
+	);
+
+	public bool SeparatorIsVisible
+	{
+		get => (bool)GetValue(SeparatorIsVisibleProperty);
+		set => SetValue(SeparatorIsVisibleProperty, value);
+	}
+
+	static void OnSeparatorIsVisibleChanged(BindableObject bindable, object oldValue, object newValue)
+	{
+		if (bindable is Calendar calendar)
+		{
+			calendar.RenderLayout();
+		}
+	}
+
+	public static readonly BindableProperty EventDefaultIndicatorColorProperty = BindableProperty.Create(
+		nameof(EventDefaultIndicatorColor),
+		typeof(Color),
+		typeof(Calendar),
+		Colors.DeepPink 
+	);
+
+	public Color EventDefaultIndicatorColor
+	{
+		get => (Color)GetValue(EventDefaultIndicatorColorProperty);
+		set => SetValue(EventDefaultIndicatorColorProperty, value);
+	}
 }
