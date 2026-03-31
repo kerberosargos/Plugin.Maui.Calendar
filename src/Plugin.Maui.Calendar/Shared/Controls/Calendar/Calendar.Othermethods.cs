@@ -241,7 +241,7 @@ public partial class Calendar : ContentView, IDisposable
 
 		return
 		[
-			new EventIndicatorModel { DotColor = EventDefaultIndicatorColor ?? Colors.DeepPink }
+			new EventIndicatorModel { DotColor = EventIndicatorDefaultColor ?? Colors.DeepPink }
 		];
 	}
 

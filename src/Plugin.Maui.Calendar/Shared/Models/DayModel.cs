@@ -1,7 +1,5 @@
-﻿using System.ComponentModel;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Maui.Layouts;
 using Plugin.Maui.Calendar.Enums;
 using Plugin.Maui.Calendar.Styles;
 
