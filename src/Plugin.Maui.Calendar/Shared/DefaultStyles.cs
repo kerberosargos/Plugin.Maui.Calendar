@@ -26,7 +26,7 @@ public static class DefaultStyles
 	public static Style DefaultEventIndicatorTextStyle { get; }
 	public static Style DefaultEventIndicatorImageStyle { get; }
 
-	public static Style DefaultSeparatorStyle => CreateDefaultSeparatorStyle();
+	public static Style DefaultSeparatorStyle { get; }
 
 	#endregion
 
@@ -50,6 +50,7 @@ public static class DefaultStyles
 		DefaultEventIndicatorTextContainerStyle = CreateDefaultEventIndicatorTextContainerStyle();
 		DefaultEventIndicatorTextStyle = CreateDefaultEventIndicatorTextStyle();
 		DefaultEventIndicatorImageStyle = CreateDefaultEventIndicatorImageStyle();
+		DefaultSeparatorStyle = CreateDefaultSeparatorStyle();
 	}
 
 	static Style CreateBaseHeaderLabelStyle()
