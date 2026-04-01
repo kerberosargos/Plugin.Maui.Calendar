@@ -209,17 +209,13 @@ sealed partial class DayModel : ObservableObject
 			return (IsDisabled, IsSelected, HasEvents, IsThisMonth, IsToday, IsWeekend) switch
 			{
 				(true, _, _, _, _, _) => DisabledColor,
-				(false, true, false, true, true, _)
-					=> SelectedTodayTextColor == Colors.Transparent
-						? SelectedTextColor
-						: SelectedTodayTextColor,
-				(false, true, false, true, false, _) => SelectedTextColor,
-				(false, false, _, false, _, _) => OtherMonthColor,
+				(false, true, _, true, true, _)	=> SelectedTodayTextColor == Colors.Transparent ? SelectedTextColor : SelectedTodayTextColor,
+				(false, true, _, true, false, _) => SelectedTextColor,
 				(false, true, _, false, _, _) => OtherMonthSelectedColor,
-				(false, false, false, true, true, _)
-					=> TodayTextColor == Colors.Transparent ? DeselectedTextColor : TodayTextColor,
+				(false, false, _, false, _, _) => OtherMonthColor,
+				(false, false, _, true, true, _) => TodayTextColor == Colors.Transparent ? DeselectedTextColor : TodayTextColor,
 				(false, _, _, _, _, true) => WeekendDayColor,
-				(false, false, false, true, false, _) => DeselectedTextColor,
+				_ => DeselectedTextColor
 			};
 		}
 	}
