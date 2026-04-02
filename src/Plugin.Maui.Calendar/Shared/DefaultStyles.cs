@@ -27,6 +27,7 @@ public static class DefaultStyles
 	public static Style DefaultEventIndicatorImageStyle { get; }
 
 	public static Style DefaultSeparatorStyle { get; }
+	public static Style DefaultHeaderTitlesBackgroundStyle { get; }
 
 	#endregion
 
@@ -51,6 +52,7 @@ public static class DefaultStyles
 		DefaultEventIndicatorTextStyle = CreateDefaultEventIndicatorTextStyle();
 		DefaultEventIndicatorImageStyle = CreateDefaultEventIndicatorImageStyle();
 		DefaultSeparatorStyle = CreateDefaultSeparatorStyle();
+		DefaultHeaderTitlesBackgroundStyle = CreateDefaultHeaderTitlesBackgroundStyle();
 	}
 
 	static Style CreateBaseHeaderLabelStyle()
@@ -241,11 +243,28 @@ public static class DefaultStyles
 	static Style CreateDefaultSeparatorStyle()
 	{
 		Style style = new(typeof(BoxView));
-		style.Setters.Add(new Setter { Property = BoxView.ColorProperty, Value = Colors.LightGray });
-		style.Setters.Add(new Setter { Property = VisualElement.HeightRequestProperty, Value = 1.0 });
-		style.Setters.Add(new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.End });
-		style.Setters.Add(new Setter { Property = View.MarginProperty, Value = new Thickness(0, 0, 0, -1) });
+		style.Setters.Add(new Setter() { Property = BoxView.ColorProperty, Value = Colors.LightGray });
+		style.Setters.Add(new Setter() { Property = VisualElement.HeightRequestProperty, Value = 1.0 });
+		style.Setters.Add(new Setter() { Property = View.VerticalOptionsProperty, Value = LayoutOptions.End });
+		style.Setters.Add(new Setter() { Property = View.MarginProperty, Value = new Thickness(0, 0, 0, -1) });
 		
 		return style;
 	}
+
+	static Style CreateDefaultHeaderTitlesBackgroundStyle()
+	{
+		Style style = new(typeof(Border)) { CanCascade = true };
+		style.Setters.Add(new Setter() { Property = VisualElement.HeightRequestProperty, Value = 48 });
+		style.Setters.Add(new Setter() { Property = Border.StrokeShapeProperty, Value = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 0 } });
+		style.Setters.Add(new Setter() { Property = View.MarginProperty, Value = new Thickness(0) });
+		style.Setters.Add(new Setter() { Property = Border.PaddingProperty, Value = new Thickness(0) });
+		style.Setters.Add(new Setter() { Property = Border.StrokeThicknessProperty, Value = 0 });
+		style.Setters.Add(new Setter() { Property = View.BackgroundColorProperty, Value = Colors.Transparent });
+		style.Setters.Add(new Setter() { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Fill });
+		style.Setters.Add(new Setter() { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Fill });
+
+		return style;
+	}
+
+
 }

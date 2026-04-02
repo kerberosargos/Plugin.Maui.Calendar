@@ -6,11 +6,12 @@ using Plugin.Maui.Calendar.Enums;
 using Plugin.Maui.Calendar.Interfaces;
 using Plugin.Maui.Calendar.Models;
 
-
 namespace Plugin.Maui.Calendar.Controls;
 
 public partial class Calendar : ContentView, IDisposable
 {
+	readonly Dictionary<int, BoxView> weekSeparators = new();
+
 	int GetWeekNumber(DateTime date)
 	{
 		return Culture.Calendar.GetWeekOfYear(
@@ -132,6 +133,16 @@ public partial class Calendar : ContentView, IDisposable
 		CurrentViewLayoutEngine = new MonthViewEngine(FirstDayOfWeek);
 	}
 
+	void ChangeDaysControlRowSpacing(double spacing)
+	{
+		daysControl.RowSpacing = spacing;
+	}
+
+	void ChangeDaysControlColumnSpacing(double spacing)
+	{
+		daysControl.ColumnSpacing = spacing;
+	}
+
 	void RenderLayout()
 	{
 		CurrentViewLayoutEngine = CalendarLayout switch
@@ -144,6 +155,7 @@ public partial class Calendar : ContentView, IDisposable
 		daysControl.Children.Clear();
 		daysControl.RowDefinitions.Clear();
 		daysControl.ColumnDefinitions.Clear();
+		weekSeparators.Clear();
 
 		var generatedLayout = CurrentViewLayoutEngine.GenerateLayout(
 			dayViews,
@@ -159,12 +171,27 @@ public partial class Calendar : ContentView, IDisposable
 
 		for (int i = 0; i < generatedLayout.RowDefinitions.Count; i++)
 		{
-			if (i > 0 && SeparatorIsVisible) // Day Titles
+			const int columnsCount = 7;
+
+			if (i == 0)
 			{
-				var separator = new BoxView { Style = SeparatorStyle };
+				var headerTitlesBackground = new Border { Style = HeaderTitlesBackgroundStyle };
+				Grid.SetRow(headerTitlesBackground, i);
+				Grid.SetColumnSpan(headerTitlesBackground, columnsCount);
+				daysControl.Children.Add(headerTitlesBackground);
+			}
+
+			if (i > 0 && SeparatorIsVisible)
+			{
+				var separator = new BoxView
+				{
+					Style = SeparatorStyle,
+					ClassId = $"week_separator_{i}"
+				};
 				Grid.SetRow(separator, i);
-				Grid.SetColumnSpan(separator, 7);
+				Grid.SetColumnSpan(separator, columnsCount);
 				daysControl.Children.Add(separator);
+				weekSeparators[i] = separator;
 			}
 
 			daysControl.RowDefinitions.Add(generatedLayout.RowDefinitions[i]);
@@ -177,7 +204,31 @@ public partial class Calendar : ContentView, IDisposable
 
 		UpdateDaysColors();
 		UpdateDayTitles();
-		UpdateDays();
+		UpdateDays(forceUpdate: true);
+	}
+
+	void UpdateSeparatorVisibility()
+	{
+		if (!SeparatorIsVisible || weekSeparators.Count == 0)
+		{
+			return;
+		}
+
+		foreach (var (rowIndex, separator) in weekSeparators)
+		{
+			int startIndex = (rowIndex - 1) * 7;
+			if (startIndex < 0 || startIndex >= dayViews.Count)
+			{
+				continue;
+			}
+
+			bool rowIsEmpty = dayViews
+				.Skip(startIndex)
+				.Take(7)
+				.All(dv => dv.BindingContext is DayModel dm && !dm.IsControlVisible);
+
+			separator.IsVisible = !rowIsEmpty;
+		}
 	}
 
 	internal void AssignEventIndicatorColors(ref DayModel dayModel)

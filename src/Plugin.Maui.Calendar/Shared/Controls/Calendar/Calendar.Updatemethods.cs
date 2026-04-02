@@ -133,6 +133,7 @@ public partial class Calendar : ContentView, IDisposable
 	DateTime firstDate = DateTime.MinValue;
 	void UpdateDays(bool forceUpdate = false)
 	{
+
 		int lastDayOfMonth = 0;
 		if (!forceUpdate && firstDate == CurrentViewLayoutEngine.GetFirstDate(ShownDate))
 		{
@@ -157,7 +158,15 @@ public partial class Calendar : ContentView, IDisposable
 					lastDayOfMonth = addDays;
 				}
 
-				bool currentMonthOnLine = lastDayOfMonth == 0 || (addDays - 1) / 7 == (lastDayOfMonth - 1) / 7;
+				bool currentMonthOnLine = lastDayOfMonth > 0
+					&& (addDays - 1) / 7 == (lastDayOfMonth - 1) / 7;
+
+				//System.Diagnostics.Debug.WriteLine(
+				//	$"Date: {currentDate:dd.MM}, addDays: {addDays}, lastDayOfMonth: {lastDayOfMonth}, " +
+				//	$"row: {(addDays - 1) / 7}, lastDayRow: {(lastDayOfMonth > 0 ? (lastDayOfMonth - 1) / 7 : -1)}, " +
+				//	$"currentMonthOnLine: {currentMonthOnLine}, " +
+				//	$"OtherMonthWeekIsVisible(prop): {OtherMonthWeekIsVisible}, " +
+				//	$"IsThisMonth: {currentDate.Month == ShownDate.Month}");
 
 				dayModel.Date = currentDate.Date;
 				dayModel.Day = UseNativeDigits ? currentDate.Day.ToNativeDigitString(Culture) : currentDate.Day.ToString(Culture);
@@ -173,11 +182,12 @@ public partial class Calendar : ContentView, IDisposable
 				dayModel.EventIndicatorImageStyle = EventIndicatorImageStyle;
 				dayModel.IsThisMonth = CalendarLayout != WeekLayout.Month || currentDate.Month == ShownDate.Month;
 				dayModel.OtherMonthIsVisible = CalendarLayout != WeekLayout.Month || OtherMonthDayIsVisible;
-				dayModel.OtherMonthWeekIsVisible = CalendarLayout != WeekLayout.Month || OtherMonthWeekIsVisible || (OtherMonthDayIsVisible && currentMonthOnLine);
+				dayModel.OtherMonthWeekIsVisible = CalendarLayout != WeekLayout.Month
+					|| OtherMonthWeekIsVisible
+					|| (OtherMonthDayIsVisible && currentMonthOnLine);
 				dayModel.HasEvents = Events.ContainsKey(currentDate);
 				dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate || (DisabledDates?.Contains(currentDate.Date) ?? false);
 				dayModel.AllowDeselect = AllowDeselecting;
-
 				dayModel.IsSelected = CurrentSelectionEngine.IsDateSelected(dayModel.Date);
 				AssignEventIndicatorColors(ref dayModel);
 			}
@@ -207,6 +217,8 @@ public partial class Calendar : ContentView, IDisposable
 				AssignEventIndicatorColors(ref dayModel);
 			}
 		}
+
+		Dispatcher.Dispatch(UpdateSeparatorVisibility);
 	}
 
 	void UpdateDaysColors()

@@ -642,4 +642,63 @@ public partial class Calendar : ContentView, IDisposable
 		get => (Color)GetValue(EventIndicatorDefaultColorProperty);
 		set => SetValue(EventIndicatorDefaultColorProperty, value);
 	}
+
+	public static readonly BindableProperty RowSpacingProperty = BindableProperty.Create(
+		nameof(RowSpacing),
+		typeof(double),
+		typeof(Calendar),
+		0d,
+		propertyChanged: OnRowSpacingChanged
+	);
+
+	public double RowSpacing
+	{
+		get => (double)GetValue(RowSpacingProperty);
+		set => SetValue(RowSpacingProperty, value);
+	}
+
+	static void OnRowSpacingChanged(BindableObject bindable, object oldValue, object newValue)
+	{
+		if (bindable is Calendar calendar)
+		{
+			calendar.ChangeDaysControlRowSpacing((double)newValue);
+		}
+	}
+
+	public static readonly BindableProperty ColumnSpacingProperty = BindableProperty.Create(
+		nameof(ColumnSpacing),
+		typeof(double),
+		typeof(Calendar),
+		0d,
+		propertyChanged: OnColumnSpacingChanged
+	);
+
+	public double ColumnSpacing
+	{
+		get => (double)GetValue(ColumnSpacingProperty);
+		set => SetValue(ColumnSpacingProperty, value);
+	}
+
+	static void OnColumnSpacingChanged(BindableObject bindable, object oldValue, object newValue)
+	{
+		if (bindable is Calendar calendar)
+		{
+			calendar.ChangeDaysControlColumnSpacing((double)newValue);
+		}
+	}
+
+	public static readonly BindableProperty HeaderTitlesBackgroundStyleProperty = BindableProperty.Create
+	(
+		nameof(HeaderTitlesBackgroundStyle),
+		typeof(Style),
+		typeof(Calendar),
+		DefaultStyles.DefaultHeaderTitlesBackgroundStyle
+	);
+
+	public Style HeaderTitlesBackgroundStyle
+	{
+		get => (Style)GetValue(HeaderTitlesBackgroundStyleProperty);
+		set => SetValue(HeaderTitlesBackgroundStyleProperty, value);
+	}
+
 }
