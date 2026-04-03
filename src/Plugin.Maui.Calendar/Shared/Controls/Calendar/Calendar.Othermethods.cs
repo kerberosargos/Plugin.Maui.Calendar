@@ -11,6 +11,7 @@ namespace Plugin.Maui.Calendar.Controls;
 public partial class Calendar : ContentView, IDisposable
 {
 	readonly Dictionary<int, BoxView> weekSeparators = new();
+	BoxView headerTitlesSeparator;
 
 	int GetWeekNumber(DateTime date)
 	{
@@ -133,16 +134,6 @@ public partial class Calendar : ContentView, IDisposable
 		CurrentViewLayoutEngine = new MonthViewEngine(FirstDayOfWeek);
 	}
 
-	void ChangeDaysControlRowSpacing(double spacing)
-	{
-		daysControl.RowSpacing = spacing;
-	}
-
-	void ChangeDaysControlColumnSpacing(double spacing)
-	{
-		daysControl.ColumnSpacing = spacing;
-	}
-
 	void RenderLayout()
 	{
 		CurrentViewLayoutEngine = CalendarLayout switch
@@ -179,6 +170,15 @@ public partial class Calendar : ContentView, IDisposable
 				Grid.SetRow(headerTitlesBackground, i);
 				Grid.SetColumnSpan(headerTitlesBackground, columnsCount);
 				daysControl.Children.Add(headerTitlesBackground);
+
+				headerTitlesSeparator = new BoxView
+				{
+					Style = HeaderTitlesSeparatorStyle,
+					IsVisible = HeaderTitlesSeparatorIsVisible
+				};
+				Grid.SetRow(headerTitlesSeparator, i);
+				Grid.SetColumnSpan(headerTitlesSeparator, columnsCount);
+				daysControl.Children.Add(headerTitlesSeparator);
 			}
 
 			if (i > 0 && SeparatorIsVisible)
@@ -204,7 +204,7 @@ public partial class Calendar : ContentView, IDisposable
 
 		UpdateDaysColors();
 		UpdateDayTitles();
-		UpdateDays(forceUpdate: true);
+		UpdateDays();
 	}
 
 	void UpdateSeparatorVisibility()

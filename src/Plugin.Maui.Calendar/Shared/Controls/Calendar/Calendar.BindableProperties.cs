@@ -598,7 +598,8 @@ public partial class Calendar : ContentView, IDisposable
 		nameof(SeparatorStyle),
 		typeof(Style),
 		typeof(Calendar),
-		DefaultStyles.DefaultSeparatorStyle
+		DefaultStyles.DefaultSeparatorStyle,
+		propertyChanged: OnSeparatorChanged
 	);
 
 	public Style SeparatorStyle
@@ -613,7 +614,7 @@ public partial class Calendar : ContentView, IDisposable
 		typeof(bool),
 		typeof(Calendar),
 		true,
-		propertyChanged: OnSeparatorIsVisibleChanged
+		propertyChanged: OnSeparatorChanged
 	);
 
 	public bool SeparatorIsVisible
@@ -622,11 +623,26 @@ public partial class Calendar : ContentView, IDisposable
 		set => SetValue(SeparatorIsVisibleProperty, value);
 	}
 
-	static void OnSeparatorIsVisibleChanged(BindableObject bindable, object oldValue, object newValue)
+	static void OnSeparatorChanged(BindableObject bindable, object oldValue, object newValue)
 	{
 		if (bindable is Calendar calendar)
 		{
-			calendar.RenderLayout();
+			foreach (var (_, separator) in calendar.weekSeparators)
+			{
+				separator.Style = calendar.SeparatorStyle;
+				separator.IsVisible = calendar.SeparatorIsVisible;
+			}
+
+			if (calendar.SeparatorIsVisible && calendar.weekSeparators.Count == 0)
+			{
+				calendar.RenderLayout();
+				return;
+			}
+
+			if (calendar.SeparatorIsVisible)
+			{
+				calendar.UpdateSeparatorVisibility();
+			}
 		}
 	}
 
@@ -661,7 +677,7 @@ public partial class Calendar : ContentView, IDisposable
 	{
 		if (bindable is Calendar calendar)
 		{
-			calendar.ChangeDaysControlRowSpacing((double)newValue);
+			calendar.daysControl.RowSpacing = (double)newValue;
 		}
 	}
 
@@ -683,7 +699,7 @@ public partial class Calendar : ContentView, IDisposable
 	{
 		if (bindable is Calendar calendar)
 		{
-			calendar.ChangeDaysControlColumnSpacing((double)newValue);
+			calendar.daysControl.ColumnSpacing = (double)newValue;
 		}
 	}
 
@@ -692,13 +708,72 @@ public partial class Calendar : ContentView, IDisposable
 		nameof(HeaderTitlesBackgroundStyle),
 		typeof(Style),
 		typeof(Calendar),
-		DefaultStyles.DefaultHeaderTitlesBackgroundStyle
+		DefaultStyles.DefaultHeaderTitlesBackgroundStyle,
+		propertyChanged: OnHeaderTitlesBackgroundStyleChanged
+
 	);
 
 	public Style HeaderTitlesBackgroundStyle
 	{
 		get => (Style)GetValue(HeaderTitlesBackgroundStyleProperty);
 		set => SetValue(HeaderTitlesBackgroundStyleProperty, value);
+	}
+
+	static void OnHeaderTitlesBackgroundStyleChanged(BindableObject bindable, object oldValue, object newValue)
+	{
+		if (bindable is Calendar calendar)
+		{
+			var headerBorder = calendar.daysControl.Children
+				.OfType<Border>()
+				.FirstOrDefault(b => Grid.GetRow(b) == 0);
+
+			if (headerBorder != null)
+			{
+				headerBorder.Style = calendar.HeaderTitlesBackgroundStyle;
+			}
+		}
+	}
+
+	public static readonly BindableProperty HeaderTitlesSeparatorStyleProperty = BindableProperty.Create
+	(
+		nameof(HeaderTitlesSeparatorStyle),
+		typeof(Style),
+		typeof(Calendar),
+		DefaultStyles.DefaultHeaderTitlesSeparatorStyle,
+		propertyChanged: OnHeaderTitlesSeparatorChanged
+	);
+
+	public Style HeaderTitlesSeparatorStyle
+	{
+		get => (Style)GetValue(HeaderTitlesSeparatorStyleProperty);
+		set => SetValue(HeaderTitlesSeparatorStyleProperty, value);
+	}
+
+	public static readonly BindableProperty HeaderTitlesSeparatorIsVisibleProperty = BindableProperty.Create
+	(
+		nameof(HeaderTitlesSeparatorIsVisible),
+		typeof(bool),
+		typeof(Calendar),
+		true,
+		propertyChanged: OnHeaderTitlesSeparatorChanged
+	);
+
+	public bool HeaderTitlesSeparatorIsVisible
+	{
+		get => (bool)GetValue(HeaderTitlesSeparatorIsVisibleProperty);
+		set => SetValue(HeaderTitlesSeparatorIsVisibleProperty, value);
+	}
+
+	static void OnHeaderTitlesSeparatorChanged(BindableObject bindable, object oldValue, object newValue)
+	{
+		if (bindable is Calendar calendar)
+		{
+			if (calendar.headerTitlesSeparator != null)
+			{
+				calendar.headerTitlesSeparator.Style = calendar.HeaderTitlesSeparatorStyle;
+				calendar.headerTitlesSeparator.IsVisible = calendar.HeaderTitlesSeparatorIsVisible;
+			}
+		}
 	}
 
 }

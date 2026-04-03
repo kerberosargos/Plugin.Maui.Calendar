@@ -25,9 +25,10 @@ public static class DefaultStyles
 	public static Style DefaultEventIndicatorTextContainerStyle { get; }
 	public static Style DefaultEventIndicatorTextStyle { get; }
 	public static Style DefaultEventIndicatorImageStyle { get; }
-
 	public static Style DefaultSeparatorStyle { get; }
 	public static Style DefaultHeaderTitlesBackgroundStyle { get; }
+	public static Style DefaultHeaderTitlesSeparatorStyle { get; }
+
 
 	#endregion
 
@@ -53,6 +54,8 @@ public static class DefaultStyles
 		DefaultEventIndicatorImageStyle = CreateDefaultEventIndicatorImageStyle();
 		DefaultSeparatorStyle = CreateDefaultSeparatorStyle();
 		DefaultHeaderTitlesBackgroundStyle = CreateDefaultHeaderTitlesBackgroundStyle();
+		DefaultHeaderTitlesSeparatorStyle = CreateDefaultHeaderTitlesSeparatorStyle();
+
 	}
 
 	static Style CreateBaseHeaderLabelStyle()
@@ -265,6 +268,18 @@ public static class DefaultStyles
 
 		return style;
 	}
+
+	static Style CreateDefaultHeaderTitlesSeparatorStyle()
+	{
+		Style style = new(typeof(BoxView));
+		style.Setters.Add(new Setter() { Property = BoxView.ColorProperty, Value = Colors.Gray });
+		style.Setters.Add(new Setter() { Property = VisualElement.HeightRequestProperty, Value = 1.0 });
+		style.Setters.Add(new Setter() { Property = View.VerticalOptionsProperty, Value = LayoutOptions.End });
+		style.Setters.Add(new Setter() { Property = View.MarginProperty, Value = new Thickness(0, 0, 0, -1) });
+
+		return style;
+	}
+
 
 
 }
