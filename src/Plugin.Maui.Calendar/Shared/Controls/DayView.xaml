@@ -31,10 +31,12 @@
             </DataTemplate>
 
             <DataTemplate x:Key="ImageTemplate" x:DataType="models:EventIndicatorModel">
-                <Image
-                    Source="{Binding ImageSource}"
-                    Style="{Binding BindingContext.EventIndicatorImageStyle, Source={x:Reference dayView}}"
-                    VerticalOptions="{Binding BindingContext.DayIndicatorViewVerticalOptions, Mode=OneWay, Source={x:Reference dayView}}" />
+                <Border Style="{Binding BindingContext.EventIndicatorImageContainerStyle, Source={x:Reference dayView}}" VerticalOptions="{Binding BindingContext.DayIndicatorViewVerticalOptions, Mode=OneWay, Source={x:Reference dayView}}">
+                    <Image
+                        Source="{Binding ImageSource}"
+                        Style="{Binding BindingContext.EventIndicatorImageStyle, Source={x:Reference dayView}}"
+                        VerticalOptions="{Binding BindingContext.DayIndicatorViewVerticalOptions, Mode=OneWay, Source={x:Reference dayView}}" />
+                </Border>
             </DataTemplate>
 
             <selectors:EventIndicatorTemplateSelector

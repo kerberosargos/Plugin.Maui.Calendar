@@ -269,6 +269,7 @@ public partial class Calendar : ContentView, IDisposable
 		dayModel.EventIndicatorTextContainerStyle = EventIndicatorTextContainerStyle;
 		dayModel.EventIndicatorTextStyle = EventIndicatorTextStyle;
 		dayModel.EventIndicatorImageStyle = EventIndicatorImageStyle;
+		dayModel.EventIndicatorImageContainerStyle = EventIndicatorImageContainerStyle;
 	}
 
 	internal List<EventIndicatorModel> ResolveEventIndicators(object dayEventCollection)

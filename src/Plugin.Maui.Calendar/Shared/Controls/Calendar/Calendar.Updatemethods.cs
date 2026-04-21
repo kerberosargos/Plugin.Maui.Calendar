@@ -180,6 +180,7 @@ public partial class Calendar : ContentView, IDisposable
 				dayModel.EventIndicatorTextStyle = EventIndicatorTextStyle;
 				dayModel.EventIndicatorTextContainerStyle = EventIndicatorTextContainerStyle;
 				dayModel.EventIndicatorImageStyle = EventIndicatorImageStyle;
+				dayModel.EventIndicatorImageContainerStyle = EventIndicatorImageContainerStyle;
 				dayModel.IsThisMonth = CalendarLayout != WeekLayout.Month || currentDate.Month == ShownDate.Month;
 				dayModel.OtherMonthIsVisible = CalendarLayout != WeekLayout.Month || OtherMonthDayIsVisible;
 				dayModel.OtherMonthWeekIsVisible = CalendarLayout != WeekLayout.Month
@@ -207,6 +208,7 @@ public partial class Calendar : ContentView, IDisposable
 				dayModel.EventIndicatorTextContainerStyle = EventIndicatorTextContainerStyle;
 				dayModel.EventIndicatorTextStyle = EventIndicatorTextStyle;
 				dayModel.EventIndicatorImageStyle = EventIndicatorImageStyle;
+				dayModel.EventIndicatorImageContainerStyle = EventIndicatorImageContainerStyle;
 				dayModel.IsThisMonth = false;
 				dayModel.OtherMonthIsVisible = false;
 				dayModel.OtherMonthWeekIsVisible = false;

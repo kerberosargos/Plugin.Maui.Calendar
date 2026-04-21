@@ -56,6 +56,9 @@ sealed partial class DayModel : ObservableObject
 	Style eventIndicatorImageStyle = DefaultStyles.DefaultEventIndicatorImageStyle;
 
 	[ObservableProperty]
+	Style eventIndicatorImageContainerStyle = DefaultStyles.DefaultEventIndicatorImageContainerStyle;
+
+	[ObservableProperty]
 	ICommand dayTappedCommand;
 
 	[ObservableProperty]
