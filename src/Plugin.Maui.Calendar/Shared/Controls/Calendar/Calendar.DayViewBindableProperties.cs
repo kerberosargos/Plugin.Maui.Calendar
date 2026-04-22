@@ -153,19 +153,5 @@ public partial class Calendar : ContentView, IDisposable
 		get => (Style)GetValue(EventIndicatorImageStyleProperty);
 		set => SetValue(EventIndicatorImageStyleProperty, value);
 	}
-
-	// EventIndicatorImageContainerStyle
-	public static readonly BindableProperty EventIndicatorImageContainerStyleProperty = BindableProperty.Create(
-		nameof(EventIndicatorImageContainerStyle),
-		typeof(Style),
-		typeof(Calendar),
-		DefaultStyles.DefaultEventIndicatorImageContainerStyle,
-		propertyChanged: (b, o, n) => (b as Calendar)?.UpdateDays(true));
-
-	public Style EventIndicatorImageContainerStyle
-	{
-		get => (Style)GetValue(EventIndicatorImageContainerStyleProperty);
-		set => SetValue(EventIndicatorImageContainerStyleProperty, value);
-	}
-
+	
 }
