@@ -15,7 +15,6 @@
         <ResourceDictionary>
 
             <conv:StrokeShapeConverter x:Key="StrokeShapeConverter" />
-            <conv:ImageSourceToBoolConverter x:Key="ImageSourceToBoolConverter" />
 
             <DataTemplate x:Key="DotTemplate" x:DataType="models:EventIndicatorModel">
                 <Border
