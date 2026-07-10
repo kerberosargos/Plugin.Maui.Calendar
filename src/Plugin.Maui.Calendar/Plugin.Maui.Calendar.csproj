@@ -1,105 +1,93 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFrameworks>net10.0;net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
-		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-		 <!--<TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
-		<UseMaui>true</UseMaui>
-		<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
-		<SingleProject>true</SingleProject>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    
-		<!-- Enable Source Generators for XAML in .NET 10 -->
-		<MauiXamlInflator>SourceGen</MauiXamlInflator>
-		<!--  <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles> -->
-    
-		<!-- Enable trimming and AOT analyzers on all platforms -->
-		<!-- <IsAotCompatible>true</IsAotCompatible>
+  <PropertyGroup>
+    <TargetFrameworks>net10.0;net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
+    <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+    <!--<TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
+    <UseMaui>true</UseMaui>
+    <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
+    <SingleProject>true</SingleProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+    <!-- Enable Source Generators for XAML in .NET 10 -->
+    <MauiXamlInflator>SourceGen</MauiXamlInflator>
+    <!--  <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles> -->
+
+    <!-- Enable trimming and AOT analyzers on all platforms -->
+    <!-- <IsAotCompatible>true</IsAotCompatible>
 		<EnableTrimAnalyzer>true</EnableTrimAnalyzer>
 		<EnableSingleFileAnalyzer>true</EnableSingleFileAnalyzer>
 		<PublishAot>true</PublishAot> -->
-    
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.2</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
-		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 
-		<!-- NuGet -->
-		<Authors>yurkinh</Authors>
-		<Copyright>Copyright © yurkinh and contributors</Copyright>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageVersion>3.0.3</PackageVersion>
-		<IsPackable>True</IsPackable>
-		<PackageProjectUrl>https://github.com/yurkinh/Plugin.Maui.Calendar</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/yurkinh/Plugin.Maui.Calendar</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		<PackageTags>dotnet-maui;maui;calendar;calendar control</PackageTags>
-		<IncludeSymbols>True</IncludeSymbols>
-		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<EmbedUntrackedSources>true</EmbedUntrackedSources>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<Title>.NET MAUI Calendar Control Plugin</Title>
-		<Description>Highly customizable Calendar Control for a .NET MAUI application.</Description>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<DebugType>portable</DebugType>
-		<PackageIcon>nuget.png</PackageIcon>
-		<PackageReleaseNotes>
-                        * Updated to .NET 10 MAUI SR71                        
-                        * Normalize Arabic weekday headers before abbreviation/truncation by @yurkinh with @Copilot in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/250
-                        * Fix #135: boundary day incorrectly disabled when MinimumDate/MaximumDate has a non-midnight time by @yurkinh in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/251
-                        * fix: update package references and font handling for Maui by @yurkinh in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/256
-                        * Fix #227: use AbbreviatedDayNames when truncating weekday headers by @yurkinh with @Copilot in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/252
-                        * Analyzing open issues for easy fixes by @yurkinh with @Copilot in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/254
-                        * Added weekend day background color property by @MykhailoDav in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/258
-                        * Expose visible date range via `ShownDates` API on Calendar by @yurkinh with @Copilot in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/253
-                        * fix: stop Calendar emitting List→ObservableCollection binding warning by @MykhailoDav in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/260                                             
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.2</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+
+    <!-- NuGet -->
+    <Authors>yurkinh</Authors>
+    <Copyright>Copyright © yurkinh and contributors</Copyright>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageVersion>3.0.3</PackageVersion>
+    <IsPackable>True</IsPackable>
+    <PackageProjectUrl>https://github.com/yurkinh/Plugin.Maui.Calendar</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/yurkinh/Plugin.Maui.Calendar</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>dotnet-maui;maui;calendar;calendar control</PackageTags>
+    <IncludeSymbols>True</IncludeSymbols>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Title>.NET MAUI Calendar Control Plugin</Title>
+    <Description>Highly customizable Calendar Control for a .NET MAUI application.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <DebugType>portable</DebugType>
+    <PackageIcon>nuget.png</PackageIcon>
+    <PackageReleaseNotes>
+      * Updated to .NET 10 MAUI SR71
+      * Normalize Arabic weekday headers before abbreviation/truncation by @yurkinh with @Copilot in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/250
+      * Fix #135: boundary day incorrectly disabled when MinimumDate/MaximumDate has a non-midnight time by @yurkinh in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/251
+      * fix: update package references and font handling for Maui by @yurkinh in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/256
+      * Fix #227: use AbbreviatedDayNames when truncating weekday headers by @yurkinh with @Copilot in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/252
+      * Analyzing open issues for easy fixes by @yurkinh with @Copilot in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/254
+      * Added weekend day background color property by @MykhailoDav in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/258
+      * Expose visible date range via `ShownDates` API on Calendar by @yurkinh with @Copilot in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/253
+      * fix: stop Calendar emitting List→ObservableCollection binding warning by @MykhailoDav in https://github.com/yurkinh/Plugin.Maui.Calendar/pull/260
     </PackageReleaseNotes>
-	</PropertyGroup>	
+  </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup> 
-	<ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+    <CreatePackage>false</CreatePackage>
+  </PropertyGroup>
+  <ItemGroup>
 
-<<<<<<< .mine
-	  <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.71" />		
-	  <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300">
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	    <PrivateAssets>all</PrivateAssets>
-	  </PackageReference>
-	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-=======
-	  <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.71" />		
-	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.71" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Shared\" />
+    <None Remove="Shared\Models\" />
+    <None Remove="Shared\Controls\" />
+    <None Remove="Shared\Converters\" />
+  </ItemGroup>
 
-
-
-
->>>>>>> .theirs
-	</ItemGroup>
-	<ItemGroup>
-	  <None Remove="Shared\" />
-	  <None Remove="Shared\Models\" />
-	  <None Remove="Shared\Controls\" />
-	  <None Remove="Shared\Converters\" />
-	</ItemGroup>
-	
-	<ItemGroup>
-		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-			<_Parameter1>Plugin.Maui.Calendar.Tests</_Parameter1>
-		</AssemblyAttribute>
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Shared\Converters\" />
-	</ItemGroup>
-	<!-- Package additions -->
-	<ItemGroup>
-		<None Include="..\..\nuget.png" PackagePath="nuget.png" Pack="true" />
-		<None Include="..\..\README.md" PackagePath="README.md" Pack="true" />
-	</ItemGroup>	
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>Plugin.Maui.Calendar.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Shared\Models\" />
+    <Folder Include="Shared\Converters\" />
+  </ItemGroup>
+  <!-- Package additions -->
+  <ItemGroup>
+    <None Include="..\..\nuget.png" PackagePath="nuget.png" Pack="true" />
+    <None Include="..\..\README.md" PackagePath="README.md" Pack="true" />
+  </ItemGroup>
 </Project>
