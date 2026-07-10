@@ -58,9 +58,14 @@ class SingleSelectionEngine : ISelectionEngine
 
 	void ISelectionEngine.UpdateDateSelection(IEnumerable<DateTime> datesToSelect)
 	{
-		// Cast to DateTime? so FirstOrDefault returns null for an empty sequence
-		// instead of DateTime.MinValue, avoiding two separate Any() + First() calls.
-		selectedDate = datesToSelect?.Cast<DateTime?>().FirstOrDefault();
+		if (datesToSelect is not null && datesToSelect.Any())
+		{
+			selectedDate = datesToSelect.First();
+		}
+		else
+		{
+			selectedDate = null;
+		}
 	}
 
 	void SelectSingleDate(DateTime? dateToSelect)

@@ -1,20 +1,10 @@
-<div align="center">
-
-<img src="https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/nuget.png" alt="Plugin.Maui.Calendar" width="130" />
-
++
 # Calendar Plugin for .NET MAUI
 
-**Highly customizable Calendar control for .NET MAUI** — events, localization, theming, range &amp; multi-selection.
+This is a .NET MAUI port of the [lilcodelab](https://github.com/lilcodelab/) Xamarin.Forms  [Calendar Plugin](https://github.com/lilcodelab/Xamarin.Plugin.Calendar)
 
-[![NuGet](https://img.shields.io/nuget/v/Plugin.Maui.Calendar.svg?label=NuGet&logo=nuget)](https://www.nuget.org/packages/Plugin.Maui.Calendar/)
-[![Downloads](https://img.shields.io/nuget/dt/Plugin.Maui.Calendar.svg?color=blue&logo=nuget)](https://www.nuget.org/packages/Plugin.Maui.Calendar/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/yurkinh/Plugin.Maui.Calendar/blob/main/LICENSE)
-[![.NET MAUI](https://img.shields.io/badge/.NET%20MAUI-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/apps/maui)
-[![Stars](https://img.shields.io/github/stars/yurkinh/Plugin.Maui.Calendar?style=flat&logo=github)](https://github.com/yurkinh/Plugin.Maui.Calendar/stargazers)
+ Available on NuGet: <https://www.nuget.org/packages/Plugin.Maui.Calendar> [![NuGet](https://img.shields.io/nuget/v/Plugin.Maui.Calendar.svg?label=NuGet)](https://www.nuget.org/packages/Plugin.Maui.Calendar/)
 
-</div>
-
-A .NET MAUI port of the [lilcodelab](https://github.com/lilcodelab/) Xamarin.Forms [Calendar Plugin](https://github.com/lilcodelab/Xamarin.Plugin.Calendar).
 
 Simple cross-platform plugin for Calendar control featuring:
 - Displaying events by binding EventCollection
@@ -91,19 +81,23 @@ V1.0.x
 
 
 ## Screenshots
-| Android | iOS | Win | Mac |
-| ------- | ------ | ------ | ------ |
-| ![Android Calendar Screenshot](https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/res/android.png) | ![iPhone Calendar Screenshot](https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/res/ios.png) | ![Windiws Calendar Screenshot](https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/res/win.png) | ![Mac Calendar Screenshot](https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/res/mac.png) |
+| Android | iOS |
+| ------- | ------ |
+| ![Android Calendar Screenshot](https://github.com/yurkinh/Plugin.Maui.Calendar/blob/main/res/android.png) | ![iPhone Calendar Screenshot](https://github.com/yurkinh/Plugin.Maui.Calendar/blob/main/res/ios.png) |
+
+| Win     | Mac    |
+| ------- | ------ |
+| ![Windiws Calendar Screenshot](https://github.com/yurkinh/Plugin.Maui.Calendar/blob/main/res/win.png) | ![Mac Calendar Screenshot](https://github.com/yurkinh/Plugin.Maui.Calendar/blob/main/res/mac.png) |
 
 Theme support
 | Ligth | Dark | Settings |
 | ------- | ------ | ------ |
-| ![Light theme Screenshot](https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/res/LightTheme.png) | ![Dark theme Screenshot](https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/res/DarkTheme.png) | ![Settings Page Screenshot](https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/res/ThemeSettingPage.png) |
+| ![Light theme Screenshot](https://github.com/yurkinh/Plugin.Maui.Calendar/blob/main/res/LightTheme.png) | ![Dark theme Screenshot](https://github.com/yurkinh/Plugin.Maui.Calendar/blob/main/res/DarkTheme.png) | ![Settings Page Screenshot](https://github.com/yurkinh/Plugin.Maui.Calendar/blob/main/res/ThemeSettingPage.png) |
 
 Culture support
 | Android | iOS |
 | ------- | ------ |
-| ![Android Culture Screenshot](https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/res/Culture_support_android.png) | ![iPhone Culture Screenshot](https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/res/Culture_support_iOS.png) |
+| ![Android Culture Screenshot](https://github.com/yurkinh/Plugin.Maui.Calendar/blob/main/res/Culture_support_android.png) | ![iPhone Culture Screenshot](https://github.com/yurkinh/Plugin.Maui.Calendar/blob/main/res/Culture_support_iOS.png) |
 
 
 # New Samples
@@ -111,13 +105,12 @@ Culture support
 Windows 11 calendar
 | Win     | Mac    |
 | ------- | ------ |
-| ![Windiws 11 android Calendar Screenshot](https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/res/W11_android.png) | ![Windiws 11 Calendar IOS Screenshot](https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/res/W11_ios.png) |
+| ![Windiws 11 android Calendar Screenshot](https://github.com/yurkinh/Plugin.Maui.Calendar/blob/main/res/W11_android.png) | ![Windiws 11 Calendar IOS Screenshot](https://github.com/yurkinh/Plugin.Maui.Calendar/blob/main/res/W11_ios.png) |
 
-Weekend calendars — the `filled` variant uses `WeekendDayBackgroundColor` to fill weekend cells, a transparent selected-day background and a custom header template.
-
-| Weekend (Android) | Weekend (iOS) | Weekend filled |
-| ------- | ------ | ------ |
-| ![Weekend calendar Android Screenshot](https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/res/WeekendCalendar_android.png) | ![Weekend calendar IOS Screenshot](https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/res/WeekendCalendar_ios.png) | ![Weekend filled calendar Screenshot](https://raw.githubusercontent.com/yurkinh/Plugin.Maui.Calendar/main/res/WeekendFilledCalendar.png) |
+Weekend calendar
+| Android     | IOS    |
+| ------- | ------ |
+| ![Weekend calendar Android Screenshot](https://github.com/yurkinh/Plugin.Maui.Calendar/blob/main/res/WeekendCalendar_android.png) | ![Weekend calendar IOS Screenshot](https://github.com/yurkinh/Plugin.Maui.Calendar/blob/main/res/WeekendCalendar_ios.png) |
 
 ### Usage
 To get started just install the package via Nuget.
@@ -283,20 +276,6 @@ TodayTextColor="Yellow"
 OtherMonthSelectedDayColor="HotPink"
 ```
 
-##### Weekend column background
-
-`WeekendDayBackgroundColor` fills the background of each weekend (Saturday/Sunday) day cell.
-The day-of-week title row is left uncovered, and vertically-consecutive weekend days touch
-with no gap while remaining individual rounded boxes. It is opt-in and defaults to
-`Transparent`, so existing calendars are unaffected. The weekend columns are derived from
-`FirstDayOfWeek`. Use `WeekendDayBackgroundCornerRadius` to round each box.
-
-```xml
-<controls:Calendar
-    WeekendDayBackgroundColor="#EEF0F4"
-    WeekendDayBackgroundCornerRadius="12"/>
-```
-
 #### Available Styles
 | Style Key                       | Based On (`DefaultStyles`)                           |
 | ------------------------------- | ---------------------------------------------------- |
@@ -373,7 +352,7 @@ SwipeUpToHideEnabled="False"
 
 ##### Selection type of calendar
 
-You can either use the `Calender` class implementation for a single selection mode, multiselection mode, `RangeSelectionCalendar` for a range selection mode, or `WeekSelectionCalendar` for whole-week selection after tapping one day.
+You can either use the `Calender` class implementation for a single selection mode, multiselection mode or `RangeSelectionCalendar` for a range selection mode.
 
 ```xml
     <plugin:Calendar
@@ -395,14 +374,6 @@ On the `MultiselectionCalendar` you can select multiple separate dates
         MaximumDate="{Binding MaximumDate}"
         MinimumDate="{Binding MinimumDate}"
         Month="{Binding Month}" >
-```
-
-On the `WeekSelectionCalendar`, tapping one day selects the entire week based on `FirstDayOfWeek`.
-
-```xml
-    <plugin:WeekSelectionCalendar
-        FirstDayOfWeek="Monday"
-        SelectedDates="{Binding SelectedDates}" />
 ```
 
 __Remark: Don't use both `SelectedDates` and `SelectedStartDate`/`SelectedEndDate`__

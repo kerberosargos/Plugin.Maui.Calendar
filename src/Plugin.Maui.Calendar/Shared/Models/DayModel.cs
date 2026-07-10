@@ -224,17 +224,7 @@ sealed partial class DayModel : ObservableObject
 
 	public bool IsControlVisible => IsThisMonth || OtherMonthWeekIsVisible;
 
-	// Cached result of Date.Date == DateTime.Today; updated in OnDateChanged via the
-	// MVVM Toolkit partial hook so that BackgroundColor, TextColor and OutlineColor
-	// getters never call DateTime.Today more than once per Date assignment.
-	bool isToday;
-
-	partial void OnDateChanged(DateTime value)
-	{
-		isToday = value.Date == DateTime.Today;
-	}
-
-	bool IsToday => isToday;
+	bool IsToday => Date.Date == DateTime.Today;
 
 	public bool IsWeekend => (Date.DayOfWeek == DayOfWeek.Saturday || Date.DayOfWeek == DayOfWeek.Sunday) && WeekendDayColor != Colors.Transparent;
 }

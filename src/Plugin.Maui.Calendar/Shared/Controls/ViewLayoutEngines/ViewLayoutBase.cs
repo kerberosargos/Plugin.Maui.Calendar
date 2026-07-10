@@ -13,26 +13,7 @@ abstract class ViewLayoutBase(DayOfWeek firstDayOfWeek)
 		return dateInWeek.AddDays(-1 * difference).Date;
 	}
 
-	/// <summary>
-	/// Returns <see langword="true"/> when the grid column at <paramref name="column"/>
-	/// (0-based, measured from <paramref name="firstDayOfWeek"/>) falls on a Saturday or
-	/// Sunday. Used by <see cref="Calendar.UpdateWeekendBackground"/> to place the weekend
-	/// background boxes on the same columns as the Saturday/Sunday day-of-week titles.
-	/// </summary>
-	internal static bool IsWeekendColumn(DayOfWeek firstDayOfWeek, int column)
-	{
-		int dayNumber = ((int)firstDayOfWeek + column) % numberOfDaysInWeek;
-		return dayNumber == (int)DayOfWeek.Saturday || dayNumber == (int)DayOfWeek.Sunday;
-	}
-
-	/// <summary>
-	/// Populates <paramref name="targetGrid"/> with the day-of-week header row and
-	/// <paramref name="numberOfWeeks"/> × 7 <see cref="DayView"/> cells.
-	/// The caller must clear the grid's Children, RowDefinitions and ColumnDefinitions
-	/// before calling this method.
-	/// </summary>
-	protected static void GenerateWeekLayout(
-			Grid targetGrid,
+	protected static Grid GenerateWeekLayout(
 			List<DayView> dayViews,
 			object bindingContext,
 			string daysTitleLabelStyleeBindingName,
@@ -40,16 +21,27 @@ abstract class ViewLayoutBase(DayOfWeek firstDayOfWeek)
 			int numberOfWeeks
 	)
 	{
-		targetGrid.ColumnSpacing = 0d;
-		targetGrid.RowSpacing = 6d;
+		var rowDefinition = new RowDefinition();
 
-		// Header row (day-of-week titles)
-		targetGrid.RowDefinitions.Add(new RowDefinition());
-
-		for (int col = 0; col < numberOfDaysInWeek; col++)
+		var grid = new Grid
 		{
-			targetGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-		}
+			ColumnSpacing = 0d,
+			RowSpacing = 6d,
+			RowDefinitions =
+			[
+				rowDefinition,
+			],
+			ColumnDefinitions =
+			{
+				new ColumnDefinition(){ Width = GridLength.Star},
+				new ColumnDefinition(){ Width = GridLength.Star},
+				new ColumnDefinition(){ Width = GridLength.Star},
+				new ColumnDefinition(){ Width = GridLength.Star},
+				new ColumnDefinition(){ Width = GridLength.Star},
+				new ColumnDefinition(){ Width = GridLength.Star},
+				new ColumnDefinition(){ Width = GridLength.Star},
+			}
+		};
 
 		for (int i = 0; i < numberOfDaysInWeek; i++)
 		{
@@ -60,21 +52,17 @@ abstract class ViewLayoutBase(DayOfWeek firstDayOfWeek)
 			};
 			label.SetBinding(VisualElement.StyleProperty, daysTitleLabelStyleeBindingName);
 
-			targetGrid.Add(label, i, 0);
+			grid.Add(label, i, 0);
 		}
 
 		dayViews.Clear();
 
 		for (int i = 1; i <= numberOfWeeks; i++)
 		{
-<<<<<<< HEAD
 			rowDefinition = new RowDefinition { Height = GridLength.Auto };
 			grid.RowDefinitions.Add(rowDefinition);
-=======
-			targetGrid.RowDefinitions.Add(new RowDefinition());
->>>>>>> remotes/upstream/main
 
-			for (int col = 0; col < numberOfDaysInWeek; col++)
+			for (int ii = 0; ii < 7; ii++)
 			{
 				var dayView = new DayView();
 				var dayModel = new DayModel();
@@ -82,8 +70,10 @@ abstract class ViewLayoutBase(DayOfWeek firstDayOfWeek)
 				dayModel.DayTappedCommand = dayTappedCommand;
 
 				dayViews.Add(dayView);
-				targetGrid.Add(dayView, col, i);
+				grid.Add(dayView, ii, i);
 			}
 		}
+
+		return grid;
 	}
 }

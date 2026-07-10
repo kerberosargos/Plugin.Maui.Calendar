@@ -45,12 +45,11 @@ public partial class Calendar : ContentView, IDisposable
 		ShownDate = CurrentViewLayoutEngine.GetPreviousUnit(ShownDate);
 		var newMonth = DateOnly.FromDateTime(ShownDate);
 
-		var args = new MonthChangedEventArgs(oldMonth, newMonth);
-		MonthChanged?.Invoke(this, args);
+		MonthChanged?.Invoke(this, new MonthChangedEventArgs(oldMonth, newMonth));
 
 		if (MonthChangedCommand?.CanExecute(null) == true)
 		{
-			MonthChangedCommand.Execute(args);
+			MonthChangedCommand.Execute(new MonthChangedEventArgs(oldMonth, newMonth));
 		}
 	}
 
@@ -60,12 +59,11 @@ public partial class Calendar : ContentView, IDisposable
 		ShownDate = CurrentViewLayoutEngine.GetNextUnit(ShownDate);
 		var newMonth = DateOnly.FromDateTime(ShownDate);
 
-		var args = new MonthChangedEventArgs(oldMonth, newMonth);
-		MonthChanged?.Invoke(this, args);
+		MonthChanged?.Invoke(this, new MonthChangedEventArgs(oldMonth, newMonth));
 
 		if (MonthChangedCommand?.CanExecute(null) == true)
 		{
-			MonthChangedCommand.Execute(args);
+			MonthChangedCommand.Execute(new MonthChangedEventArgs(oldMonth, newMonth));
 		}
 	}
 
@@ -155,15 +153,6 @@ public partial class Calendar : ContentView, IDisposable
 
 	void RenderLayout()
 	{
-<<<<<<< HEAD
-=======
-		// Item 16: skip during construction; the constructor performs one render at the end.
-		if (isInitializing)
-		{
-			return;
-		}
-
->>>>>>> remotes/upstream/main
 		CurrentViewLayoutEngine = CalendarLayout switch
 		{
 			WeekLayout.Week => new WeekViewEngine(1, FirstDayOfWeek),
@@ -176,21 +165,13 @@ public partial class Calendar : ContentView, IDisposable
 		daysControl.ColumnDefinitions.Clear();
 		weekSeparators.Clear();
 
-<<<<<<< HEAD
 		var generatedLayout = CurrentViewLayoutEngine.GenerateLayout(
-=======
-		// Item 3: GenerateLayout now populates daysControl directly, eliminating the
-		// intermediate Grid allocation and the O(n) copy loops.
-		CurrentViewLayoutEngine.GenerateLayout(
-			daysControl,
->>>>>>> remotes/upstream/main
 			dayViews,
 			this,
 			nameof(DaysTitleLabelStyle),
 			DayTappedCommand
 		);
 
-<<<<<<< HEAD
 		foreach (var colDef in generatedLayout.ColumnDefinitions)
 		{
 			daysControl.ColumnDefinitions.Add(colDef);
@@ -239,22 +220,8 @@ public partial class Calendar : ContentView, IDisposable
 		}
 
 		UpdateDaysColors();
-=======
-		// Item 13: cache the 7 day-of-week header Labels so UpdateDayTitles doesn't
-		// re-filter Children.OfType<Label>() on every culture/style change.
-		dayTitleLabels = daysControl.Children.OfType<Label>().ToArray();
-
-		// Item 2: push global properties onto the freshly created DayModels before the
-		// per-day date render so UpdateDays only handles date-specific values.
-		UpdateDayGlobalProperties();
->>>>>>> remotes/upstream/main
 		UpdateDayTitles();
 		UpdateDays();
-
-		// (Re)create the weekend background boxes for the freshly built grid — but only when
-		// WeekendDayBackgroundColor is set. The grid was just cleared, so any boxes from the
-		// previous layout are already detached; RemoveWeekendBands clears the stale cache.
-		UpdateWeekendBackground();
 	}
 
 	void UpdateSeparatorVisibility()

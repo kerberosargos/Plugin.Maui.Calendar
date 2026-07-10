@@ -11,8 +11,7 @@ public partial class Calendar : ContentView, IDisposable
 		nameof(DayViewSize),
 		typeof(double),
 		typeof(Calendar),
-		40.0,
-		propertyChanged: OnDayViewGlobalPropertyChanged
+		40.0
 	);
 
 	/// <summary>
@@ -31,13 +30,7 @@ public partial class Calendar : ContentView, IDisposable
 		nameof(DayViewBorderMargin),
 		typeof(Thickness),
 		typeof(Calendar),
-<<<<<<< .mine
 		new Thickness(8)
-
-=======
-		default(Thickness),
-		propertyChanged: OnDayViewGlobalPropertyChanged
->>>>>>> .theirs
 	);
 
 	/// <summary>
@@ -57,7 +50,7 @@ public partial class Calendar : ContentView, IDisposable
 		typeof(float),
 		typeof(Calendar),
 		20f,
-		propertyChanged: OnDayViewGlobalPropertyChanged
+		propertyChanged: OnDayViewCornerRadiusChanged
 	);
 
 	/// <summary>
@@ -69,6 +62,15 @@ public partial class Calendar : ContentView, IDisposable
 		set => SetValue(DayViewCornerRadiusProperty, value);
 	}
 
+	static void OnDayViewCornerRadiusChanged(BindableObject bindable, object oldValue, object newValue)
+	{
+		if (bindable is Calendar calendar)
+		{
+			calendar.UpdateDays();
+		}
+	}
+
+
 	/// <summary>
 	/// Bindable property for DaysLabelStyle
 	/// </summary>
@@ -77,7 +79,7 @@ public partial class Calendar : ContentView, IDisposable
 		typeof(Style),
 		typeof(Calendar),
 		DefaultStyles.DefaultLabelStyle,
-		propertyChanged: OnDayViewGlobalPropertyChanged
+		propertyChanged: OnDaysLabelStyleChanged
 	);
 
 	/// <summary>
@@ -89,14 +91,11 @@ public partial class Calendar : ContentView, IDisposable
 		set => SetValue(DaysLabelStyleProperty, value);
 	}
 
-	// Item 2: a single handler for all structural DayView properties so that changes
-	// only trigger UpdateDayGlobalProperties (one pass) instead of UpdateDays (full
-	// date-recomputation pass).
-	static void OnDayViewGlobalPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+	static void OnDaysLabelStyleChanged(BindableObject bindable, object oldValue, object newValue)
 	{
 		if (bindable is Calendar calendar)
 		{
-			calendar.UpdateDayGlobalProperties();
+			calendar.UpdateDays(true);
 		}
 	}
 

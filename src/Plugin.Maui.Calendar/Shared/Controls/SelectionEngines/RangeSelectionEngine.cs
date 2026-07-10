@@ -81,26 +81,16 @@ class RangedSelectionEngine : ISelectionEngine
 
 	List<DateTime> CreateRangeList(List<DateTime> disabledDates = null)
 	{
-		if (!rangeSelectionStartDate.HasValue || !rangeSelectionEndDate.HasValue)
+		var rangeList = new List<DateTime>();
+
+		if (rangeSelectionStartDate.HasValue && rangeSelectionEndDate.HasValue)
 		{
-			return [];
-		}
-
-		var start = rangeSelectionStartDate.Value.Date;
-		var end = rangeSelectionEndDate.Value.Date;
-		var capacity = (end - start).Days + 1;
-		var rangeList = new List<DateTime>(capacity);
-
-		// Use a HashSet for O(1) per-day lookups instead of O(n) List.Contains.
-		HashSet<DateTime> disabledSet = disabledDates?.Count > 0
-			? new HashSet<DateTime>(disabledDates)
-			: null;
-
-		for (var date = start; date <= end; date = date.AddDays(1))
-		{
-			if (disabledSet is null || !disabledSet.Contains(date))
+			for (var date = rangeSelectionStartDate.Value.Date; date <= rangeSelectionEndDate.Value.Date; date = date.AddDays(1))
 			{
-				rangeList.Add(date);
+				if (disabledDates == null || !disabledDates.Contains(date))
+				{
+					rangeList.Add(date);
+				}
 			}
 		}
 

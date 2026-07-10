@@ -404,8 +404,7 @@ public partial class Calendar : ContentView, IDisposable
 		nameof(DayTappedCommand),
 		typeof(ICommand),
 		typeof(Calendar),
-		null,
-		propertyChanged: OnDayTappedCommandChanged
+		null
 	);
 
 	/// <summary>
@@ -415,14 +414,6 @@ public partial class Calendar : ContentView, IDisposable
 	{
 		get => (ICommand)GetValue(DayTappedCommandProperty);
 		set => SetValue(DayTappedCommandProperty, value);
-	}
-
-	static void OnDayTappedCommandChanged(BindableObject bindable, object oldValue, object newValue)
-	{
-		if (bindable is Calendar calendar)
-		{
-			calendar.UpdateDayGlobalProperties();
-		}
 	}
 
 
@@ -584,33 +575,13 @@ public partial class Calendar : ContentView, IDisposable
 	}
 
 	/// <summary>
-	/// Bindable property for ShownDatesChangedCommand.
-	/// </summary>
-	public static readonly BindableProperty ShownDatesChangedCommandProperty = BindableProperty.Create(
-		nameof(ShownDatesChangedCommand),
-		typeof(ICommand),
-		typeof(Calendar),
-		null
-	);
-
-	/// <summary>
-	/// Command that is executed when the visible date range changes.
-	/// </summary>
-	public ICommand ShownDatesChangedCommand
-	{
-		get => (ICommand)GetValue(ShownDatesChangedCommandProperty);
-		set => SetValue(ShownDatesChangedCommandProperty, value);
-	}
-
-	/// <summary>
 	/// Bindable property for AllowDeselect
 	/// </summary>
 	public static readonly BindableProperty AllowDeselectingProperty = BindableProperty.Create(
 		nameof(AllowDeselecting),
 		typeof(bool),
 		typeof(Calendar),
-		true,
-		propertyChanged: OnAllowDeselectingChanged
+		true
 	);
 
 	/// <summary>
@@ -622,7 +593,6 @@ public partial class Calendar : ContentView, IDisposable
 		set => SetValue(AllowDeselectingProperty, value);
 	}
 
-<<<<<<< HEAD
 	public static readonly BindableProperty SeparatorStyleProperty = BindableProperty.Create
 	(
 		nameof(SeparatorStyle),
@@ -806,13 +776,4 @@ public partial class Calendar : ContentView, IDisposable
 		}
 	}
 
-=======
-	static void OnAllowDeselectingChanged(BindableObject bindable, object oldValue, object newValue)
-	{
-		if (bindable is Calendar calendar)
-		{
-			calendar.UpdateDayGlobalProperties();
-		}
-	}
->>>>>>> remotes/upstream/main
 }
