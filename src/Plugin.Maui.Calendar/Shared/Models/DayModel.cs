@@ -158,6 +158,9 @@ sealed partial class DayModel : ObservableObject
 	[ObservableProperty]
 	Color disabledColor = Color.FromArgb("#ECECEC");
 
+	[ObservableProperty]
+	double dayIndicatorViewHorizontalSpacing = 3.0;
+
 	public Thickness DayIndicatorViewMargin
 	{
 		get

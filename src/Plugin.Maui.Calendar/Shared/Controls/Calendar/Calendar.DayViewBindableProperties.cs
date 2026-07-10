@@ -34,12 +34,31 @@ public partial class Calendar : ContentView, IDisposable
 	);
 
 	/// <summary>
+	/// Bindable property for DayIndicatorViewHorizontalSpacing
+	/// </summary>
+	public static readonly BindableProperty DayIndicatorViewHorizontalSpacingProperty = BindableProperty.Create(
+		nameof(DayIndicatorViewHorizontalSpacing),
+		typeof(double),
+		typeof(Calendar),
+		3.0
+	);
+
+	/// <summary>
 	/// Specifies the margin of dayview border
 	/// </summary>
 	public Thickness DayViewBorderMargin
 	{
 		get => (Thickness)GetValue(DayViewBorderMarginProperty);
 		set => SetValue(DayViewBorderMarginProperty, value);
+	}
+
+	/// <summary>
+	/// Day IndicatorView Horizontal Spacing
+	/// </summary>
+	public double DayIndicatorViewHorizontalSpacing
+	{
+		get => (double)GetValue(DayIndicatorViewHorizontalSpacingProperty);
+		set => SetValue(DayIndicatorViewHorizontalSpacingProperty, value);
 	}
 
 	/// <summary>

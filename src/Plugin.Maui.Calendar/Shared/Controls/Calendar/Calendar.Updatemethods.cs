@@ -198,6 +198,7 @@ public partial class Calendar : ContentView, IDisposable
 				dayModel.EventIndicatorType = EventIndicatorPlacementType;
 				dayModel.DayViewSize = DayViewSize;
 				dayModel.DayViewBorderMargin = DayViewBorderMargin;
+				dayModel.DayIndicatorViewHorizontalSpacing = DayIndicatorViewHorizontalSpacing;
 				dayModel.DayViewCornerRadius = DayViewCornerRadius;
 				dayModel.DaysLabelStyle = DaysLabelStyle;
 				dayModel.EventIndicatorDotStyle = EventIndicatorDotStyle;
@@ -225,6 +226,7 @@ public partial class Calendar : ContentView, IDisposable
 				dayModel.EventIndicatorType = EventIndicatorPlacementType;
 				dayModel.DayViewSize = DayViewSize;
 				dayModel.DayViewBorderMargin = DayViewBorderMargin;
+				dayModel.DayIndicatorViewHorizontalSpacing = DayIndicatorViewHorizontalSpacing;
 				dayModel.DayViewCornerRadius = DayViewCornerRadius;
 				dayModel.DaysLabelStyle = DaysLabelStyle;
 				dayModel.EventIndicatorDotStyle = EventIndicatorDotStyle;

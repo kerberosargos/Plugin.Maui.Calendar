@@ -80,7 +80,7 @@
                 BindableLayout.ItemTemplateSelector="{StaticResource IndicatorSelector}"
                 BindableLayout.ItemsSource="{Binding EventIndicators, Mode=OneWay}"
                 HorizontalOptions="Center"
-                Spacing="3"
+                Spacing="{Binding DayIndicatorViewHorizontalSpacing, Mode=OneWay}"
                 VerticalOptions="Center" />
 
         </ContentView>

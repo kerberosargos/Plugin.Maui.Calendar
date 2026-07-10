@@ -281,6 +281,7 @@ public partial class Calendar : ContentView, IDisposable
 		dayModel.EventDayBackgroundColorIsActive = EventDayBackgroundColorIsActive;
 		dayModel.EventDayBackgroundColor = EventDayBackgroundColor;
 		dayModel.DayViewBorderMargin = DayViewBorderMargin;
+		dayModel.DayIndicatorViewHorizontalSpacing = DayIndicatorViewHorizontalSpacing;
 		dayModel.DayViewCornerRadius = DayViewCornerRadius;
 		dayModel.EventIndicatorDotStyle = EventIndicatorDotStyle;
 		dayModel.EventIndicatorTextContainerStyle = EventIndicatorTextContainerStyle;
