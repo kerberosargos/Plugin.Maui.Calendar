@@ -8,14 +8,16 @@ sealed class WeekViewEngine(int numberOfWeeks, DayOfWeek firstDayOfWeek) : ViewL
 	readonly int numberOfWeeks = numberOfWeeks;
 	readonly int unitSizeinDays = 7 * numberOfWeeks;
 
-	public Grid GenerateLayout(
+	public void GenerateLayout(
+		Grid targetGrid,
 		List<DayView> dayViews,
 		object bindingContext,
 		string daysTitleLabelStyleeBindingName,
 		ICommand dayTappedCommand
 	)
 	{
-		return GenerateWeekLayout(
+		GenerateWeekLayout(
+			targetGrid,
 			dayViews,
 			bindingContext,
 			daysTitleLabelStyleeBindingName,
@@ -31,6 +33,15 @@ sealed class WeekViewEngine(int numberOfWeeks, DayOfWeek firstDayOfWeek) : ViewL
 			return DateTime.MinValue;
 		}
 		return GetFirstDateOfWeek(dateToShow);
+	}
+
+	public DateTime GetLastDate(DateTime dateToShow)
+	{
+		var firstDate = GetFirstDate(dateToShow).Date;
+		var daysUntilMax = (DateTime.MaxValue.Date - firstDate).Days;
+		var safeOffset = Math.Min(unitSizeinDays - 1, Math.Max(0, daysUntilMax));
+
+		return firstDate.AddDays(safeOffset);
 	}
 
 	public DateTime GetNextUnit(DateTime forDate)

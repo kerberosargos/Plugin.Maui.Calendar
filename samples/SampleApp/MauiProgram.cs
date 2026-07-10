@@ -5,6 +5,9 @@ using Mopups.Hosting;
 using SampleApp.Helpers;
 using SampleApp.Services;
 using SampleApp.Views;
+#if DEBUG
+using Microsoft.Maui.DevFlow.Agent;
+#endif
 
 namespace SampleApp;
 
@@ -20,26 +23,26 @@ public static class MauiProgram
             .InjectServices()
             .InjectViewsAndViewModels()
             .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                fonts.AddFont("font-awesome-6-free-solid.otf", "FontAwesomeSolid");
-                fonts.AddFont("font-awesome-6-free-regular.otf", "FontAwesomeRegular");
-                fonts.AddFont("DarkerGrotesque-VariableFont_wght.ttf", "DarkerGrotesque");
-            });
+			{
+				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+				fonts.AddFont("font-awesome-6-free-solid.otf", "FontAwesomeSolid");
+				fonts.AddFont("font-awesome-6-free-regular.otf", "FontAwesomeRegular");
+			});
 
 
 #if DEBUG
-        builder.Logging.AddDebug();
-        builder.UseLeakDetection(collectionTarget =>
-            {
-				// This callback will run any time a leak is detected.
-				Application.Current?.Dispatcher.Dispatch(async () =>
-				{
-					await Shell.Current.DisplayAlertAsync("💦Leak Detected💦",
-						$"❗🧟❗{collectionTarget.Name} is a zombie!", "OK");
-				});
-			});
+		builder.Logging.AddDebug();
+		builder.UseMemoryToolkit(options =>
+	{
+		options.DefaultTearDownStrategy = TearDownStrategy.DisconnectHandlers;
+		options.OnLeaked = collectionTarget =>
+		{
+			// This callback will run any time a leak is detected.
+		};
+	});
+
+		builder.AddMauiDevFlowAgent();
 #endif
 
         var app = builder.Build();
