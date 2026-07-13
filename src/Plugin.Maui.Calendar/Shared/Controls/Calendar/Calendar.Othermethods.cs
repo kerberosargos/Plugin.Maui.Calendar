@@ -153,6 +153,12 @@ public partial class Calendar : ContentView, IDisposable
 
 	void RenderLayout()
 	{
+		// Item 16: skip during construction; the constructor performs one render at the end.
+		if (isInitializing)
+		{
+			return;
+		}
+
 		CurrentViewLayoutEngine = CalendarLayout switch
 		{
 			WeekLayout.Week => new WeekViewEngine(1, FirstDayOfWeek),
@@ -165,12 +171,16 @@ public partial class Calendar : ContentView, IDisposable
 		daysControl.ColumnDefinitions.Clear();
 		weekSeparators.Clear();
 
+		// Item 3: GenerateLayout now populates daysControl directly, eliminating the
+		// intermediate Grid allocation and the O(n) copy loops.
 		var generatedLayout = CurrentViewLayoutEngine.GenerateLayout(
+			daysControl,
 			dayViews,
 			this,
 			nameof(DaysTitleLabelStyle),
 			DayTappedCommand
 		);
+
 
 		foreach (var colDef in generatedLayout.ColumnDefinitions)
 		{
@@ -219,9 +229,20 @@ public partial class Calendar : ContentView, IDisposable
 			daysControl.Children.Add(child);
 		}
 
-		UpdateDaysColors();
+		// Item 13: cache the 7 day-of-week header Labels so UpdateDayTitles doesn't
+		// re-filter Children.OfType<Label>() on every culture/style change.
+		dayTitleLabels = daysControl.Children.OfType<Label>().ToArray();
+
+		// Item 2: push global properties onto the freshly created DayModels before the
+		// per-day date render so UpdateDays only handles date-specific values.
+		UpdateDayGlobalProperties();
 		UpdateDayTitles();
 		UpdateDays();
+
+		// (Re)create the weekend background boxes for the freshly built grid — but only when
+		// WeekendDayBackgroundColor is set. The grid was just cleared, so any boxes from the
+		// previous layout are already detached; RemoveWeekendBands clears the stale cache.
+		UpdateWeekendBackground();
 	}
 
 	void UpdateSeparatorVisibility()

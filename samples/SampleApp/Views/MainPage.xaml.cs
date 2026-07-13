@@ -25,6 +25,10 @@ public partial class MainPage : ContentPage
         await Shell.Current.GoToAsync(nameof(WeekendCalendarPage));
 
 
+    async void WeekendFilledCalendar(object sender, EventArgs e) =>
+        await Shell.Current.GoToAsync(nameof(WeekendFilledCalendarPage));
+
+
     async void MultiSelectionCalendar(object sender, EventArgs e) =>
         await Shell.Current.GoToAsync(nameof(MultiSelectionPage));
 
@@ -35,6 +39,10 @@ public partial class MainPage : ContentPage
 
     async void RangeCalendar(object sender, EventArgs e) =>
         await Shell.Current.GoToAsync(nameof(RangeSelectionPage));
+
+
+    async void WeekSelectionCalendar(object sender, EventArgs e) =>
+        await Shell.Current.GoToAsync(nameof(WeekSelectionPage));
 
 
     async void PickerPopup(object sender, EventArgs e) =>
