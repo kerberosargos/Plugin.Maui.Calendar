@@ -173,7 +173,7 @@ public partial class Calendar : ContentView, IDisposable
 
 		// Item 3: GenerateLayout now populates daysControl directly, eliminating the
 		// intermediate Grid allocation and the O(n) copy loops.
-		var generatedLayout = CurrentViewLayoutEngine.GenerateLayout(
+		CurrentViewLayoutEngine.GenerateLayout(
 			daysControl,
 			dayViews,
 			this,
@@ -181,16 +181,11 @@ public partial class Calendar : ContentView, IDisposable
 			DayTappedCommand
 		);
 
+		int rowCount = daysControl.RowDefinitions.Count;
+		const int columnsCount = 7;
 
-		foreach (var colDef in generatedLayout.ColumnDefinitions)
+		for (int i = 0; i < rowCount; i++)
 		{
-			daysControl.ColumnDefinitions.Add(colDef);
-		}
-
-		for (int i = 0; i < generatedLayout.RowDefinitions.Count; i++)
-		{
-			const int columnsCount = 7;
-
 			if (i == 0)
 			{
 				var headerTitlesBackground = new Border { Style = HeaderTitlesBackgroundStyle };
@@ -220,21 +215,13 @@ public partial class Calendar : ContentView, IDisposable
 				daysControl.Children.Add(separator);
 				weekSeparators[i] = separator;
 			}
-
-			daysControl.RowDefinitions.Add(generatedLayout.RowDefinitions[i]);
-		}
-
-		foreach (var child in generatedLayout.Children)
-		{
-			daysControl.Children.Add(child);
 		}
 
 		// Item 13: cache the 7 day-of-week header Labels so UpdateDayTitles doesn't
 		// re-filter Children.OfType<Label>() on every culture/style change.
 		dayTitleLabels = daysControl.Children.OfType<Label>().ToArray();
 
-		// Item 2: push global properties onto the freshly created DayModels before the
-		// per-day date render so UpdateDays only handles date-specific values.
+		// Item 2: push global properties onto the freshly created DayModels
 		UpdateDayGlobalProperties();
 		UpdateDayTitles();
 		UpdateDays();

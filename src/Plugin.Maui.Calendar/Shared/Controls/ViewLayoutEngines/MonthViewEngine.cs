@@ -7,7 +7,7 @@ sealed class MonthViewEngine(DayOfWeek firstDayOfWeek) : ViewLayoutBase(firstDay
 {
 	const int monthNumberOfWeeks = 6;
 
-	public Grid GenerateLayout(
+	public void GenerateLayout(
 		Grid targetGrid,
 		List<DayView> dayViews,
 		object bindingContext,
@@ -15,8 +15,7 @@ sealed class MonthViewEngine(DayOfWeek firstDayOfWeek) : ViewLayoutBase(firstDay
 		ICommand dayTappedCommand
 	)
 	{
-
-		return GenerateWeekLayout(
+		GenerateWeekLayout(
 			targetGrid,
 			dayViews,
 			bindingContext,

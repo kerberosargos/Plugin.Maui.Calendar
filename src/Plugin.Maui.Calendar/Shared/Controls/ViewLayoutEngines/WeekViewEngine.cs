@@ -8,7 +8,7 @@ sealed class WeekViewEngine(int numberOfWeeks, DayOfWeek firstDayOfWeek) : ViewL
 	readonly int numberOfWeeks = numberOfWeeks;
 	readonly int unitSizeinDays = 7 * numberOfWeeks;
 
-	public Grid GenerateLayout(
+	public void GenerateLayout(
 		Grid targetGrid,
 		List<DayView> dayViews,
 		object bindingContext,
@@ -16,7 +16,7 @@ sealed class WeekViewEngine(int numberOfWeeks, DayOfWeek firstDayOfWeek) : ViewL
 		ICommand dayTappedCommand
 	)
 	{
-		return GenerateWeekLayout(
+		GenerateWeekLayout(
 			targetGrid,
 			dayViews,
 			bindingContext,

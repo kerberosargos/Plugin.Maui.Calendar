@@ -11,7 +11,7 @@ interface IViewLayoutEngine
 	/// <see cref="DayView"/> cells.  The caller is responsible for clearing the grid
 	/// before invoking this method.
 	/// </summary>
-	Grid GenerateLayout(
+	void GenerateLayout(
 		Grid targetGrid,
 		List<DayView> dayViews,
 		object bindingContext,

@@ -31,7 +31,7 @@ abstract class ViewLayoutBase(DayOfWeek firstDayOfWeek)
 	/// The caller must clear the grid's Children, RowDefinitions and ColumnDefinitions
 	/// before calling this method.
 	/// </summary>
-	protected static Grid GenerateWeekLayout(
+	protected static void GenerateWeekLayout(
 			Grid targetGrid,
 			List<DayView> dayViews,
 			object bindingContext,
@@ -80,7 +80,5 @@ abstract class ViewLayoutBase(DayOfWeek firstDayOfWeek)
 				targetGrid.Add(dayView, col, i);
 			}
 		}
-
-		return targetGrid;
 	}
 }
